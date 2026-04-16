@@ -63,8 +63,11 @@
             animation: shimmer 3s linear infinite;
         }
         
-        .scroll-reveal { opacity:0; transform:translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
-        .scroll-reveal.revealed { opacity:1; transform:translateY(0); }
+/* All scroll-reveal elements are visible by default */
+.scroll-reveal {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
         
         /* ── LAYOUT ── */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
@@ -777,7 +780,11 @@
     overflow: hidden;
     background: linear-gradient(180deg, var(--bg) 0%, #e3f4ec 45%, var(--bg) 100%);
 }
- 
+
+.rider-sticky-inner {
+    /* no sticky — normal flow, scroll is never blocked */
+}
+
 .rider-section::before {
     content: "";
     position: absolute;
@@ -902,6 +909,178 @@
     transition: transform 0.05s linear;
 }
 
+.rider-bike-sprite {
+        position: relative;
+        z-index: 5;
+        width: 340px;
+        height: 340px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url('rider/ezgif-frame-001.png');
+    }
+
+    /* Keyframes kept for reference but NOT used — JS handles frame switching */
+    @keyframes rider-frames {
+        /* Calculado: 100% / 154 frames ≈ 0.65% por frame */
+        0%      { background-image: url('rider/ezgif-frame-001.png'); }
+        0.65%   { background-image: url('rider/ezgif-frame-002.png'); }
+        1.3%    { background-image: url('rider/ezgif-frame-003.png'); }
+        1.95%   { background-image: url('rider/ezgif-frame-004.png'); }
+        2.6%    { background-image: url('rider/ezgif-frame-005.png'); }
+        3.25%   { background-image: url('rider/ezgif-frame-006.png'); }
+        3.9%    { background-image: url('rider/ezgif-frame-007.png'); }
+        4.55%   { background-image: url('rider/ezgif-frame-008.png'); }
+        5.19%   { background-image: url('rider/ezgif-frame-009.png'); }
+        5.84%   { background-image: url('rider/ezgif-frame-010.png'); }
+        6.49%   { background-image: url('rider/ezgif-frame-011.png'); }
+        7.14%   { background-image: url('rider/ezgif-frame-012.png'); }
+        7.79%   { background-image: url('rider/ezgif-frame-013.png'); }
+        8.44%   { background-image: url('rider/ezgif-frame-014.png'); }
+        9.09%   { background-image: url('rider/ezgif-frame-015.png'); }
+        9.74%   { background-image: url('rider/ezgif-frame-016.png'); }
+        10.39%  { background-image: url('rider/ezgif-frame-017.png'); }
+        11.04%  { background-image: url('rider/ezgif-frame-018.png'); }
+        11.69%  { background-image: url('rider/ezgif-frame-019.png'); }
+        12.34%  { background-image: url('rider/ezgif-frame-020.png'); }
+        12.99%  { background-image: url('rider/ezgif-frame-021.png'); }
+        13.64%  { background-image: url('rider/ezgif-frame-022.png'); }
+        14.29%  { background-image: url('rider/ezgif-frame-023.png'); }
+        14.94%  { background-image: url('rider/ezgif-frame-024.png'); }
+        15.58%  { background-image: url('rider/ezgif-frame-025.png'); }
+        16.23%  { background-image: url('rider/ezgif-frame-026.png'); }
+        16.88%  { background-image: url('rider/ezgif-frame-027.png'); }
+        17.53%  { background-image: url('rider/ezgif-frame-028.png'); }
+        18.18%  { background-image: url('rider/ezgif-frame-029.png'); }
+        18.83%  { background-image: url('rider/ezgif-frame-030.png'); }
+        19.48%  { background-image: url('rider/ezgif-frame-031.png'); }
+        20.13%  { background-image: url('rider/ezgif-frame-032.png'); }
+        20.78%  { background-image: url('rider/ezgif-frame-033.png'); }
+        21.43%  { background-image: url('rider/ezgif-frame-034.png'); }
+        22.08%  { background-image: url('rider/ezgif-frame-035.png'); }
+        22.73%  { background-image: url('rider/ezgif-frame-036.png'); }
+        23.38%  { background-image: url('rider/ezgif-frame-037.png'); }
+        24.03%  { background-image: url('rider/ezgif-frame-038.png'); }
+        24.68%  { background-image: url('rider/ezgif-frame-039.png'); }
+        25.32%  { background-image: url('rider/ezgif-frame-040.png'); }
+        25.97%  { background-image: url('rider/ezgif-frame-041.png'); }
+        26.62%  { background-image: url('rider/ezgif-frame-042.png'); }
+        27.27%  { background-image: url('rider/ezgif-frame-043.png'); }
+        27.92%  { background-image: url('rider/ezgif-frame-044.png'); }
+        28.57%  { background-image: url('rider/ezgif-frame-045.png'); }
+        29.22%  { background-image: url('rider/ezgif-frame-046.png'); }
+        29.87%  { background-image: url('rider/ezgif-frame-047.png'); }
+        30.52%  { background-image: url('rider/ezgif-frame-048.png'); }
+        31.17%  { background-image: url('rider/ezgif-frame-049.png'); }
+        31.82%  { background-image: url('rider/ezgif-frame-050.png'); }
+        32.47%  { background-image: url('rider/ezgif-frame-051.png'); }
+        33.12%  { background-image: url('rider/ezgif-frame-052.png'); }
+        33.77%  { background-image: url('rider/ezgif-frame-053.png'); }
+        34.42%  { background-image: url('rider/ezgif-frame-054.png'); }
+        35.06%  { background-image: url('rider/ezgif-frame-055.png'); }
+        35.71%  { background-image: url('rider/ezgif-frame-056.png'); }
+        36.36%  { background-image: url('rider/ezgif-frame-057.png'); }
+        37.01%  { background-image: url('rider/ezgif-frame-058.png'); }
+        37.66%  { background-image: url('rider/ezgif-frame-059.png'); }
+        38.31%  { background-image: url('rider/ezgif-frame-060.png'); }
+        38.96%  { background-image: url('rider/ezgif-frame-061.png'); }
+        39.61%  { background-image: url('rider/ezgif-frame-062.png'); }
+        40.26%  { background-image: url('rider/ezgif-frame-063.png'); }
+        40.91%  { background-image: url('rider/ezgif-frame-064.png'); }
+        41.56%  { background-image: url('rider/ezgif-frame-065.png'); }
+        42.21%  { background-image: url('rider/ezgif-frame-066.png'); }
+        42.86%  { background-image: url('rider/ezgif-frame-067.png'); }
+        43.51%  { background-image: url('rider/ezgif-frame-068.png'); }
+        44.16%  { background-image: url('rider/ezgif-frame-069.png'); }
+        44.81%  { background-image: url('rider/ezgif-frame-070.png'); }
+        45.45%  { background-image: url('rider/ezgif-frame-071.png'); }
+        46.1%   { background-image: url('rider/ezgif-frame-072.png'); }
+        46.75%  { background-image: url('rider/ezgif-frame-073.png'); }
+        47.4%   { background-image: url('rider/ezgif-frame-074.png'); }
+        48.05%  { background-image: url('rider/ezgif-frame-075.png'); }
+        48.7%   { background-image: url('rider/ezgif-frame-076.png'); }
+        49.35%  { background-image: url('rider/ezgif-frame-077.png'); }
+        50%     { background-image: url('rider/ezgif-frame-078.png'); }
+        50.65%  { background-image: url('rider/ezgif-frame-079.png'); }
+        51.3%   { background-image: url('rider/ezgif-frame-080.png'); }
+        51.95%  { background-image: url('rider/ezgif-frame-081.png'); }
+        52.6%   { background-image: url('rider/ezgif-frame-082.png'); }
+        53.25%  { background-image: url('rider/ezgif-frame-083.png'); }
+        53.9%   { background-image: url('rider/ezgif-frame-084.png'); }
+        54.55%  { background-image: url('rider/ezgif-frame-085.png'); }
+        55.19%  { background-image: url('rider/ezgif-frame-086.png'); }
+        55.84%  { background-image: url('rider/ezgif-frame-087.png'); }
+        56.49%  { background-image: url('rider/ezgif-frame-088.png'); }
+        57.14%  { background-image: url('rider/ezgif-frame-089.png'); }
+        57.79%  { background-image: url('rider/ezgif-frame-090.png'); }
+        58.44%  { background-image: url('rider/ezgif-frame-091.png'); }
+        59.09%  { background-image: url('rider/ezgif-frame-092.png'); }
+        59.74%  { background-image: url('rider/ezgif-frame-093.png'); }
+        60.39%  { background-image: url('rider/ezgif-frame-094.png'); }
+        61.04%  { background-image: url('rider/ezgif-frame-095.png'); }
+        61.69%  { background-image: url('rider/ezgif-frame-096.png'); }
+        62.34%  { background-image: url('rider/ezgif-frame-097.png'); }
+        62.99%  { background-image: url('rider/ezgif-frame-098.png'); }
+        63.63%  { background-image: url('rider/ezgif-frame-099.png'); }
+        64.28%  { background-image: url('rider/ezgif-frame-100.png'); }
+        64.93%  { background-image: url('rider/ezgif-frame-101.png'); }
+        65.58%  { background-image: url('rider/ezgif-frame-102.png'); }
+        66.23%  { background-image: url('rider/ezgif-frame-103.png'); }
+        66.88%  { background-image: url('rider/ezgif-frame-104.png'); }
+        67.53%  { background-image: url('rider/ezgif-frame-105.png'); }
+        68.18%  { background-image: url('rider/ezgif-frame-106.png'); }
+        68.83%  { background-image: url('rider/ezgif-frame-107.png'); }
+        69.48%  { background-image: url('rider/ezgif-frame-108.png'); }
+        70.13%  { background-image: url('rider/ezgif-frame-109.png'); }
+        70.78%  { background-image: url('rider/ezgif-frame-110.png'); }
+        71.43%  { background-image: url('rider/ezgif-frame-111.png'); }
+        72.08%  { background-image: url('rider/ezgif-frame-112.png'); }
+        72.73%  { background-image: url('rider/ezgif-frame-113.png'); }
+        73.38%  { background-image: url('rider/ezgif-frame-114.png'); }
+        74.03%  { background-image: url('rider/ezgif-frame-115.png'); }
+        74.68%  { background-image: url('rider/ezgif-frame-116.png'); }
+        75.32%  { background-image: url('rider/ezgif-frame-117.png'); }
+        75.97%  { background-image: url('rider/ezgif-frame-118.png'); }
+        76.62%  { background-image: url('rider/ezgif-frame-119.png'); }
+        77.27%  { background-image: url('rider/ezgif-frame-120.png'); }
+        77.92%  { background-image: url('rider/ezgif-frame-121.png'); }
+        78.57%  { background-image: url('rider/ezgif-frame-122.png'); }
+        79.22%  { background-image: url('rider/ezgif-frame-123.png'); }
+        79.87%  { background-image: url('rider/ezgif-frame-124.png'); }
+        80.52%  { background-image: url('rider/ezgif-frame-125.png'); }
+        81.17%  { background-image: url('rider/ezgif-frame-126.png'); }
+        81.82%  { background-image: url('rider/ezgif-frame-127.png'); }
+        82.47%  { background-image: url('rider/ezgif-frame-128.png'); }
+        83.12%  { background-image: url('rider/ezgif-frame-129.png'); }
+        83.77%  { background-image: url('rider/ezgif-frame-130.png'); }
+        84.42%  { background-image: url('rider/ezgif-frame-131.png'); }
+        85.06%  { background-image: url('rider/ezgif-frame-132.png'); }
+        85.71%  { background-image: url('rider/ezgif-frame-133.png'); }
+        86.36%  { background-image: url('rider/ezgif-frame-134.png'); }
+        87.01%  { background-image: url('rider/ezgif-frame-135.png'); }
+        87.66%  { background-image: url('rider/ezgif-frame-136.png'); }
+        88.31%  { background-image: url('rider/ezgif-frame-137.png'); }
+        88.96%  { background-image: url('rider/ezgif-frame-138.png'); }
+        89.61%  { background-image: url('rider/ezgif-frame-139.png'); }
+        90.26%  { background-image: url('rider/ezgif-frame-140.png'); }
+        90.91%  { background-image: url('rider/ezgif-frame-141.png'); }
+        91.56%  { background-image: url('rider/ezgif-frame-142.png'); }
+        92.21%  { background-image: url('rider/ezgif-frame-143.png'); }
+        92.86%  { background-image: url('rider/ezgif-frame-144.png'); }
+        93.51%  { background-image: url('rider/ezgif-frame-145.png'); }
+        94.16%  { background-image: url('rider/ezgif-frame-146.png'); }
+        94.81%  { background-image: url('rider/ezgif-frame-147.png'); }
+        95.45%  { background-image: url('rider/ezgif-frame-148.png'); }
+        96.1%   { background-image: url('rider/ezgif-frame-149.png'); }
+        96.75%  { background-image: url('rider/ezgif-frame-150.png'); }
+        97.4%   { background-image: url('rider/ezgif-frame-151.png'); }
+        98.05%  { background-image: url('rider/ezgif-frame-152.png'); }
+        98.7%   { background-image: url('rider/ezgif-frame-153.png'); }
+        100%    { background-image: url('rider/ezgif-frame-154.png'); }
+    }
+
+/* Speed lines */
+
 .rider-bike-frame {
     position: relative;
     z-index: 5;
@@ -910,7 +1089,29 @@
     display: block;
 }
 
-/* Speed lines (se activan con scroll en JS) */
+/* Speed lines */
+
+.rider-bike-frame {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    height: auto;
+    display: block;
+}
+ 
+.rider-shadow {
+    position: absolute;
+    bottom: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 72%;
+    height: 18px;
+    background: radial-gradient(ellipse, rgba(27,25,21,0.22), transparent 70%);
+    filter: blur(8px);
+    border-radius: 50%;
+}
+
+/* Speed lines */
 .speed-lines {
     position: absolute;
     left: -24px;
@@ -932,75 +1133,6 @@
 .speed-line:nth-child(1) { width: 28px; }
 .speed-line:nth-child(2) { width: 48px; margin-left: 8px; }
 .speed-line:nth-child(3) { width: 22px; }
-
-.rider-bike-frame {
-    position: relative;
-    z-index: 5;
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* Speed lines (se activan con scroll en JS) */
-.speed-lines {
-    position: absolute;
-    left: -24px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-}
-.speed-lines.active { opacity: 1; }
-.speed-line {
-    height: 3px;
-    background: linear-gradient(to left, rgba(5,150,105,0.7), transparent);
-    border-radius: 9999px;
-}
-
-.rider-bike-frame {
-    position: relative;
-    z-index: 5;
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.rider-bike-frame {
-    position: relative;
-    z-index: 5;
-    width: 100%;
-    height: auto;
-    display: block;
-}
- 
-.rider-shadow {
-    position: absolute;
-    bottom: -16px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 72%;
-    height: 18px;
-    background: radial-gradient(ellipse, rgba(27,25,21,0.22), transparent 70%);
-    filter: blur(8px);
-    border-radius: 50%;
-}
- 
-.rider-bike-svg {
-    width: 100%;
-    height: auto;
-    overflow: visible;
-    display: block;
-}
- 
-
- 
-
- 
-/* Speed lines */
 .speed-lines {
     position: absolute;
     left: -24px;
@@ -1460,16 +1592,12 @@
 </section>
 
 <section id="rider" class="rider-section">
+<div class="rider-sticky-inner">
     <div class="container">
  
         <!-- ENCABEZADO CENTRADO -->
         <div class="rider-header scroll-reveal">
-            <div class="rider-badge">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
-                </svg>
-                ¡Únete al equipo!
-            </div>
+           
             <h2 class="rider-title">
                 ¡Reparte con <span class="shimmer-text">nosotros!</span>
             </h2>
@@ -1517,11 +1645,8 @@
             <div class="rider-bike-container" id="riderBike">
                 <div class="rider-shadow"></div>
 
-                <!-- Frame-based image that changes on scroll -->
-                <img class="rider-bike-frame" id="riderBikeFrame"
-                     src="rider/ezgif-frame-001.png"
-                     alt="Ciclista animado"
-                     style="width:100%;height:auto;display:block;position:relative;z-index:5;">
+                <!-- Frame-based animated sprite using CSS scroll-driven animation -->
+                <div class="rider-bike-sprite" id="riderBikeSprite"></div>
 
                 <div class="speed-lines" id="speedLines">
                     <div class="speed-line"></div>
@@ -1580,9 +1705,8 @@
         </div><!-- /cta area -->
  
     </div><!-- /container -->
+</div><!-- /rider-sticky-inner -->
 </section>
-
-<!-- PLANTILLAS -->
 <section id="templates" class="templates-wrap">
     <div class="container">
         <div class="scroll-reveal" style="text-align:center; margin-bottom:1rem;">
@@ -1991,203 +2115,89 @@
 </footer>
 
 <script>
-(function() {
-    const riderCtaBtn      = document.getElementById('riderCtaBtn');
-    const riderCtaWrapper  = document.getElementById('riderCtaWrapper');
-    const formContainer    = document.getElementById('riderFormContainer');
-    const formCloseBtn     = document.getElementById('formCloseBtn');
-    const riderForm        = document.getElementById('riderForm');
-    const riderEmail       = document.getElementById('riderEmailInput');
-    const riderSubmit      = document.getElementById('riderSubmitBtn');
-    const riderSuccess     = document.getElementById('riderSuccessBox');
+    // ── RIDER SCROLL-SCRUBBED ANIMATION ──────────────────────────────────────
+    // Compatible con todos los navegadores modernos porque usa JS + scroll nativo.
+    // Frame 1: cuando el componente empieza a entrar al viewport.
+    // Frame 154: cuando el componente ya salió completamente del viewport.
+    (function () {
+        const TOTAL_FRAMES = 154;
+        const BASE_PATH = 'rider/ezgif-frame-';
 
-    if (!riderCtaBtn) return;
+        const section = document.getElementById('rider');
+        const sprite = document.getElementById('riderBikeSprite');
+        const speedLines = document.getElementById('speedLines');
+        if (!section || !sprite) return;
 
-    let isFormVisible = false;
+        let currentFrame = 0;
+        let ticking = false;
 
-    riderCtaBtn.addEventListener('click', () => {
-        if (isFormVisible) return;
-        isFormVisible = true;
-        riderCtaBtn.classList.add('transforming');
-        setTimeout(() => {
-            riderCtaWrapper.style.display = 'none';
-            formContainer.classList.add('active');
-            riderEmail.focus();
-        }, 380);
-    });
-
-    function closeForm() {
-        isFormVisible = false;
-        formContainer.classList.remove('active');
-        setTimeout(() => {
-            riderCtaWrapper.style.display = 'block';
-            riderCtaBtn.classList.remove('transforming');
-        }, 300);
-    }
-
-    formCloseBtn.addEventListener('click', closeForm);
-
-    riderForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = riderEmail.value.trim();
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const formMsg = document.getElementById('formMsg');
-
-        if (!email) {
-            formMsg.textContent = 'Ingresa tu correo para sumarte al lanzamiento.';
-            formMsg.className = 'form-msg err'; return;
-        }
-        if (!re.test(email)) {
-            formMsg.textContent = 'Por favor ingresa un correo válido.';
-            formMsg.className = 'form-msg err'; return;
+        function pad(n) {
+            return String(n).padStart(3, '0');
         }
 
-        riderSubmit.disabled = true;
-        riderSubmit.classList.add('spin');
-        riderSubmit.querySelector('svg').setAttribute('viewBox', '0 0 24 24');
-        riderSubmit.childNodes[2].nodeValue = ' Guardando...';
+        function setFrame(frameIndex) {
+            const safeFrame = Math.max(1, Math.min(TOTAL_FRAMES, frameIndex));
+            if (safeFrame === currentFrame) return;
 
-        setTimeout(() => {
-            const subs = JSON.parse(localStorage.getItem('pymefy_subs') || '[]');
-            subs.push({ email, ts: new Date().toISOString() });
-            localStorage.setItem('pymefy_subs', JSON.stringify(subs));
+            currentFrame = safeFrame;
+            sprite.style.backgroundImage = "url('" + BASE_PATH + pad(safeFrame) + ".png')";
+        }
 
-            riderForm.style.display = 'none';
-            riderSuccess.style.display = 'block';
-        }, 1400);
-    });
-
-    /* ── SCROLL-BASED FRAME ANIMATION ── */
-    const TOTAL_FRAMES = 154;
-    const bikeContainer = document.getElementById('riderBike');
-    const frameImg = document.getElementById('riderBikeFrame');
-    const speedLines = document.getElementById('speedLines');
-
-    if (bikeContainer && frameImg) {
-        const section = bikeContainer.closest('.rider-section');
-        if (!section) return;
-
-        // Preload frames
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(() => {
-                for (let i = 1; i <= TOTAL_FRAMES; i++) {
-                    const img = new Image();
-                    img.src = `rider/ezgif-frame-${String(i).padStart(3, '0')}.png`;
-                }
-            });
-        } else {
+        function preloadFrames() {
             for (let i = 1; i <= TOTAL_FRAMES; i++) {
                 const img = new Image();
-                img.src = `rider/ezgif-frame-${String(i).padStart(3, '0')}.png`;
+                img.decoding = 'async';
+                img.loading = 'eager';
+                img.src = BASE_PATH + pad(i) + '.png';
             }
         }
 
-        let ticking = false;
-
-        const updateFrame = () => {
+        function getProgress() {
             const rect = section.getBoundingClientRect();
-            const sectionHeight = section.offsetHeight;
-            const windowHeight = window.innerHeight;
+            const vh = window.innerHeight || document.documentElement.clientHeight;
 
-            const startTrigger = windowHeight * 0.8;
-            const endTrigger = -sectionHeight * 0.2;
+            // 0 => top de la sección toca el borde inferior del viewport
+            // 1 => bottom de la sección toca el borde superior del viewport
+            const totalDistance = rect.height + vh;
+            const travelled = vh - rect.top;
+            const rawProgress = travelled / totalDistance;
 
-            let progress = 0;
-            if (rect.top <= startTrigger && rect.top >= endTrigger) {
-                const totalScroll = startTrigger - endTrigger;
-                const traveled = startTrigger - rect.top;
-                progress = traveled / totalScroll;
-            } else if (rect.top < endTrigger) {
-                progress = 1;
-            }
-
-            progress = Math.max(0, Math.min(1, progress));
-
-            // Linear mapping (frames are already smooth)
-            const frameIndex = Math.min(TOTAL_FRAMES, Math.floor(progress * TOTAL_FRAMES) + 1);
-            const framePath = `rider/ezgif-frame-${String(frameIndex).padStart(3, '0')}.png`;
-
-            if (frameImg.dataset.src !== framePath) {
-                frameImg.dataset.src = framePath;
-                frameImg.src = framePath;
-            }
-
-            // Speed lines visible mid-scroll
-            if (progress > 0.15 && progress < 0.85) {
-                speedLines?.classList.add('active');
-            } else {
-                speedLines?.classList.remove('active');
-            }
-
-            ticking = false;
-        };
-
-        const onScroll = () => {
-            if (!ticking) {
-                requestAnimationFrame(updateFrame);
-                ticking = true;
-            }
-        };
-
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onScroll, { passive: true });
-
-        // Initial frame after DOM ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', updateFrame);
-        } else {
-            setTimeout(updateFrame, 50);
+            return Math.max(0, Math.min(1, rawProgress));
         }
-    }
 
-        let ticking = false;
+        function updateRiderAnimation() {
+            const progress = getProgress();
+            const frameIndex = Math.round(progress * (TOTAL_FRAMES - 1)) + 1;
+            setFrame(frameIndex);
 
-        const updateFrame = () => {
-            const rect = section.getBoundingClientRect();
-            const sectionHeight = section.offsetHeight;
-            const windowHeight = window.innerHeight;
-
-            // Trigger area: when section enters from bottom until it exits top
-            const startOffset = windowHeight * 0.3;
-            const endOffset = windowHeight * 0.3;
-
-            const relativeTop = rect.top - startOffset;
-            const scrollableDistance = sectionHeight + startOffset + endOffset;
-
-            let progress = -relativeTop / scrollableDistance;
-            progress = Math.max(0, Math.min(1, progress));
-
-            // Ease for smoother feel
-            const eased = progress < 0.5
-                ? 2 * progress * progress
-                : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-
-            const frameIndex = Math.floor(eased * (TOTAL_FRAMES - 1)) + 1;
-            const framePath = `rider/ezgif-frame-${String(frameIndex).padStart(3, '0')}.png`;
-
-            if (frameImg.src !== framePath) {
-                frameImg.src = framePath;
+            if (speedLines) {
+                if (progress > 0.02 && progress < 0.98) {
+                    speedLines.classList.add('active');
+                } else {
+                    speedLines.classList.remove('active');
+                }
             }
+        }
 
-            // Activate speed lines during active scroll
-            if (Math.abs(progress * 100 - (window.scrollY % 100)) < 5) {
-                speedLines?.classList.add('active');
-            } else {
-                speedLines?.classList.remove('active');
-            }
+        function requestTick() {
+            if (ticking) return;
 
-            ticking = false;
-        };
+            ticking = true;
+            window.requestAnimationFrame(function () {
+                updateRiderAnimation();
+                ticking = false;
+            });
+        }
 
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(updateFrame);
-                ticking = true;
-            }
-        }, { passive: true });
+        preloadFrames();
+        setFrame(1);
+        requestTick();
 
-        updateFrame();
-    }
-})();
+        window.addEventListener('scroll', requestTick, { passive: true });
+        window.addEventListener('resize', requestTick);
+        window.addEventListener('orientationchange', requestTick);
+        window.addEventListener('load', requestTick);
+    })();
+</script>
 </body>
 </html>
