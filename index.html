@@ -2068,10 +2068,77 @@
         if (!section) return;
 
         // Preload frames
-        for (let i = 1; i <= TOTAL_FRAMES; i++) {
-            const img = new Image();
-            img.src = `rider/ezgif-frame-${String(i).padStart(3, '0')}.png`;
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+                for (let i = 1; i <= TOTAL_FRAMES; i++) {
+                    const img = new Image();
+                    img.src = `rider/ezgif-frame-${String(i).padStart(3, '0')}.png`;
+                }
+            });
+        } else {
+            for (let i = 1; i <= TOTAL_FRAMES; i++) {
+                const img = new Image();
+                img.src = `rider/ezgif-frame-${String(i).padStart(3, '0')}.png`;
+            }
         }
+
+        let ticking = false;
+
+        const updateFrame = () => {
+            const rect = section.getBoundingClientRect();
+            const sectionHeight = section.offsetHeight;
+            const windowHeight = window.innerHeight;
+
+            const startTrigger = windowHeight * 0.8;
+            const endTrigger = -sectionHeight * 0.2;
+
+            let progress = 0;
+            if (rect.top <= startTrigger && rect.top >= endTrigger) {
+                const totalScroll = startTrigger - endTrigger;
+                const traveled = startTrigger - rect.top;
+                progress = traveled / totalScroll;
+            } else if (rect.top < endTrigger) {
+                progress = 1;
+            }
+
+            progress = Math.max(0, Math.min(1, progress));
+
+            // Linear mapping (frames are already smooth)
+            const frameIndex = Math.min(TOTAL_FRAMES, Math.floor(progress * TOTAL_FRAMES) + 1);
+            const framePath = `rider/ezgif-frame-${String(frameIndex).padStart(3, '0')}.png`;
+
+            if (frameImg.dataset.src !== framePath) {
+                frameImg.dataset.src = framePath;
+                frameImg.src = framePath;
+            }
+
+            // Speed lines visible mid-scroll
+            if (progress > 0.15 && progress < 0.85) {
+                speedLines?.classList.add('active');
+            } else {
+                speedLines?.classList.remove('active');
+            }
+
+            ticking = false;
+        };
+
+        const onScroll = () => {
+            if (!ticking) {
+                requestAnimationFrame(updateFrame);
+                ticking = true;
+            }
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+
+        // Initial frame after DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', updateFrame);
+        } else {
+            setTimeout(updateFrame, 50);
+        }
+    }
 
         let ticking = false;
 
