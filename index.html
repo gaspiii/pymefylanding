@@ -217,13 +217,28 @@
     color: #fff;
   }
 
-  @media (min-width: 768px) {
+  @media (max-width: 1023px) {
+    .navbar {
+      display: none !important;
+    }
+
+    .hero {
+      padding-top: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .navbar {
+      display: block;
+    }
+
     .navbar-inner {
       grid-template-columns: auto 1fr auto;
     }
 
-    .mobile-btn {
-      display: none;
+    .mobile-btn,
+    .mobile-menu {
+      display: none !important;
     }
 
     .navbar-center {
@@ -233,13 +248,6 @@
     .navbar-nav {
       display: flex;
       margin-left: 1rem;
-    }
-  }
-
-  @media (max-width: 767px) {
-    .navbar-cta {
-      padding: .55rem .95rem;
-      font-size: .72rem;
     }
   }
         /* ── HERO ── */
@@ -764,6 +772,7 @@
         .form-msg.info { color: var(--text-light); }
         
         .success-box { display: none; margin-top: 1.5rem; padding: 1.5rem; background: rgba(5,150,105,0.08); border-radius: 1.75rem; text-align: center; }
+        .success-box.show { display: block; }
         .success-box svg { margin: 0 auto; }
         .success-title { font-size: 1.125rem; font-weight: 600; color: #064e3b; margin-top: 0.875rem; }
         .success-text { font-size: 0.875rem; color: var(--text-muted); margin-top: 0.375rem; }
@@ -835,8 +844,8 @@
  
 /* ── BENEFIT CARDS — fila horizontal centrada ── */
 .rider-cards-row {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 220px));
     justify-content: center;
     gap: 1rem;
     margin-bottom: 3.5rem;
@@ -850,7 +859,7 @@
     background: rgba(255,255,255,0.78);
     border: 1px solid rgba(0,0,0,0.08);
     border-radius: 1.5rem;
-    width: 220px;
+    min-width: 0;
     transition: all 0.25s ease;
     backdrop-filter: blur(6px);
 }
@@ -879,6 +888,35 @@
     color: var(--text-muted);
     margin-top: 0.2rem;
     line-height: 1.6;
+}
+
+@media (max-width: 767px) {
+    .rider-cards-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .rider-card {
+        gap: 0.625rem;
+        padding: 0.875rem 0.8rem;
+        border-radius: 1.125rem;
+    }
+
+    .rider-card-icon {
+        font-size: 1.05rem;
+        margin-top: 1px;
+    }
+
+    .rider-card-title {
+        font-size: 0.76rem;
+        line-height: 1.2;
+    }
+
+    .rider-card-text {
+        font-size: 0.67rem;
+        line-height: 1.4;
+    }
 }
  
 /* ── BIKE WRAPPER — centrado ── */
@@ -1175,14 +1213,36 @@
 /* ── CTA / FORM — centrado debajo de la bici ── */
 .rider-cta-area {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
+    justify-content: center;
+    width: 100%;
 }
- 
+
+.rider-capture-shell {
+    position: relative;
+    width: min(100%, 560px);
+    min-height: 72px;
+    border-radius: 9999px;
+    background: rgba(255,255,255,0.72);
+    border: 1px solid rgba(5,150,105,0.16);
+    box-shadow: 0 14px 36px rgba(5,150,105,0.12);
+    backdrop-filter: blur(14px);
+    overflow: hidden;
+    transition: min-height 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, background 0.35s ease;
+}
+
+.rider-capture-shell.expanded {
+    min-height: 176px;
+    border-radius: 1.8rem;
+    background: rgba(255,255,255,0.94);
+    box-shadow: 0 24px 54px rgba(5,150,105,0.18);
+}
+
 .rider-cta-btn {
+    width: 100%;
+    min-height: 72px;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.75rem;
     padding: 1rem 2.25rem;
     background: linear-gradient(135deg, #059669 0%, #047857 100%);
@@ -1192,7 +1252,7 @@
     border-radius: 9999px;
     border: none;
     cursor: pointer;
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, opacity 0.28s ease, filter 0.28s ease;
     box-shadow: 0 8px 24px rgba(5,150,105,0.3);
     position: relative;
     overflow: hidden;
@@ -1207,50 +1267,53 @@
 }
 .rider-cta-btn:hover::before { transform: translateX(100%); }
 .rider-cta-btn:hover {
-    transform: translateY(-3px) scale(1.03);
+    transform: translateY(-3px) scale(1.02);
     box-shadow: 0 14px 32px rgba(5,150,105,0.42);
 }
-.rider-cta-btn:active { transform: scale(0.97); }
+.rider-cta-btn:active { transform: scale(0.98); }
  
 .btn-arrow { transition: transform 0.3s ease; }
 .rider-cta-btn:hover .btn-arrow { transform: translateX(4px); }
- 
-@keyframes btn-shrink {
-    0%   { transform: scale(1); opacity: 1; }
-    100% { transform: scale(0.7); opacity: 0; }
-}
-.rider-cta-btn.transforming {
-    animation: btn-shrink 0.35s cubic-bezier(0.16,1,0.3,1) forwards;
-}
- 
-/* Form container */
-.rider-form-container {
-    display: none;
+
+.rider-capture-shell.expanded .rider-cta-btn {
     opacity: 0;
-    transform: translateY(14px) scale(0.97);
-    transition: all 0.45s cubic-bezier(0.16,1,0.3,1);
-    width: 100%;
-    max-width: 480px;
+    transform: scale(0.92);
+    pointer-events: none;
 }
-.rider-form-container.active {
-    display: block;
+
+.rider-form-container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px) scale(0.98);
+    transition: opacity 0.35s ease 0.08s, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.08s;
+}
+.rider-capture-shell.expanded .rider-form-container {
     opacity: 1;
+    pointer-events: auto;
     transform: translateY(0) scale(1);
 }
  
 .rider-form {
-    background: rgba(255,255,255,0.96);
-    border: 1px solid rgba(5,150,105,0.22);
-    border-radius: 1.75rem;
-    padding: 1.5rem;
-    box-shadow: 0 16px 40px rgba(5,150,105,0.1);
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    padding: 0.25rem;
+    box-shadow: none;
 }
  
 .form-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    gap: 1rem;
+    margin-bottom: 0.9rem;
 }
 .form-header-title { font-size: 0.9375rem; font-weight: 600; color: var(--text); }
  
@@ -1272,8 +1335,8 @@
  
 .rider-input {
     flex: 1;
-    padding: 0.875rem 1.125rem;
-    border: 2px solid rgba(0,0,0,0.1);
+    padding: 0.95rem 1.125rem;
+    border: 2px solid rgba(0,0,0,0.08);
     border-radius: 1.25rem;
     background: #fff;
     font-family: var(--font-body);
@@ -1291,8 +1354,10 @@
 .rider-submit-btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
-    padding: 0.875rem 1.5rem;
+    min-width: 136px;
+    padding: 0.95rem 1.35rem;
     background: #059669;
     color: #fff;
     font-size: 0.875rem;
@@ -1310,8 +1375,23 @@
 }
 .rider-submit-btn:hover svg { transform: translateX(3px); }
 .rider-submit-btn svg { transition: transform 0.2s ease; }
+.rider-submit-btn[disabled] {
+    opacity: 0.7;
+    cursor: wait;
+    transform: none;
+    box-shadow: none;
+}
  
 .form-note { font-size: 0.75rem; color: var(--text-light); margin-top: 0.75rem; text-align: center; }
+.rider-form-status {
+    min-height: 1.15rem;
+    margin-top: 0.65rem;
+    font-size: 0.76rem;
+    text-align: center;
+}
+.rider-form-status.error { color: #b42318; }
+.rider-form-status.success { color: #047857; }
+.rider-form-status.info { color: var(--text-light); }
  
 /* Success */
 .rider-success-box {
@@ -1324,6 +1404,57 @@
 .rider-success-box.show { display: block; }
 .rider-success-title { font-size: 1.0625rem; font-weight: 600; color: #064e3b; margin-top: 0.75rem; }
 .rider-success-text { font-size: 0.875rem; color: var(--text-muted); margin-top: 0.375rem; }
+
+@media (max-width: 767px) {
+    .rider-capture-shell {
+        min-height: 64px;
+    }
+
+    .rider-capture-shell.expanded {
+        min-height: 218px;
+        border-radius: 1.4rem;
+    }
+
+    .rider-cta-btn {
+        min-height: 64px;
+        font-size: 0.9rem;
+        padding: 0.95rem 1rem;
+    }
+
+    .rider-form-container {
+        padding: 0.6rem;
+    }
+
+    .form-header {
+        margin-bottom: 0.75rem;
+    }
+
+    .form-header-title {
+        font-size: 0.83rem;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0.625rem;
+    }
+
+    .rider-input,
+    .rider-submit-btn {
+        width: 100%;
+    }
+
+    .rider-input {
+        font-size: 0.9rem;
+        padding: 0.85rem 1rem;
+    }
+
+    .rider-submit-btn {
+        min-width: 0;
+        padding: 0.85rem 1rem;
+        border-radius: 1rem;
+    }
+}
+
  
         .footer-grid { display: grid; gap: 2rem; }
         @media(min-width:768px) { .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1fr; } }
@@ -1334,7 +1465,7 @@
         .footer-links { display: flex; flex-direction: column; gap: 0.625rem; margin-top: 1rem; }
         .footer-link { font-size: 0.875rem; color: rgba(255,255,255,0.55); transition: color 0.2s; }
         .footer-link:hover { color: #fff; }
-        .footer-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.8125rem; color: rgba(255,255,255,0.35); }
+        .footer-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; font-size: 0.8125rem; color: rgba(255,255,255,0.35); }
     </style>
 </head>
 <body>
@@ -1597,7 +1728,12 @@
  
         <!-- ENCABEZADO CENTRADO -->
         <div class="rider-header scroll-reveal">
-           
+            <div class="rider-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                </svg>
+                ¡Únete al equipo!
+            </div>
             <h2 class="rider-title">
                 ¡Reparte con <span class="shimmer-text">nosotros!</span>
             </h2>
@@ -1660,48 +1796,44 @@
  
         <!-- CTA + FORMULARIO CENTRADO -->
         <div class="rider-cta-area scroll-reveal" id="riderCtaArea">
- 
-            <!-- Botón principal -->
-            <div id="riderCtaWrapper">
-                <button class="rider-cta-btn" id="riderCtaBtn">
+            <div class="rider-capture-shell" id="riderCaptureShell">
+                <button class="rider-cta-btn" id="riderCtaBtn" type="button" aria-expanded="false" aria-controls="riderFormContainer">
                     <span>Quiero ser repartidor</span>
                     <svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
                     </svg>
                 </button>
-            </div>
  
-            <!-- Formulario (oculto al inicio) -->
-            <div class="rider-form-container" id="riderFormContainer">
-                <form class="rider-form" id="riderForm" novalidate>
-                    <div class="form-header">
-                        <p class="form-header-title">¡Casi listo! Ingresa tu correo</p>
-                        <button type="button" class="form-close" id="formCloseBtn" aria-label="Cerrar">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
-                            </svg>
-                        </button>
+                <div class="rider-form-container" id="riderFormContainer" aria-hidden="true">
+                    <form class="rider-form" id="riderForm" novalidate>
+                        <div class="form-header">
+                            <p class="form-header-title">Postula como repartidor con tu correo</p>
+                            <button type="button" class="form-close" id="formCloseBtn" aria-label="Cerrar">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="form-row">
+                            <input type="email" id="riderEmailInput" class="rider-input" placeholder="tu@correo.cl" required autocomplete="email" inputmode="email">
+                            <button type="submit" class="rider-submit-btn" id="riderSubmitBtn">
+                                <span id="riderSubmitText">Enviar postulación</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                    </form>
+                    <div class="rider-success-box" id="riderSuccessBox">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/>
+                        </svg>
+                        <p class="rider-success-title">¡Postulación enviada!</p>
+                        <p class="rider-success-text">Tu correo quedó guardado para Pymefy Riders.</p>
                     </div>
-                    <div class="form-row">
-                        <input type="email" id="riderEmailInput" class="rider-input" placeholder="tu@correo.cl" required autocomplete="email">
-                        <button type="submit" class="rider-submit-btn" id="riderSubmitBtn">
-                            <span>Enviar</span>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <p class="form-note">Tu correo quedará en nuestra base de postulantes repartidores.</p>
-                </form>
-                <div class="rider-success-box" id="riderSuccessBox">
-                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/>
-                    </svg>
-                    <p class="rider-success-title">¡Postulación enviada!</p>
-                    <p class="rider-success-text">Te contactaremos pronto para unirte a nuestro equipo ECO.</p>
                 </div>
             </div>
- 
         </div><!-- /cta area -->
  
     </div><!-- /container -->
@@ -2033,7 +2165,6 @@
                     <h2 class="signup-title">
                         Regístrate y obtén un <span class="shimmer-text">25% de descuento</span> en tu lanzamiento.
                     </h2>
-                    <p class="signup-text">Ingresa tu correo y recibe el lanzamiento con condiciones preferentes.</p>
                     <div class="signup-perks">
                         <span class="signup-perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>25% descuento primer mes</span>
                         <span class="signup-perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>Aviso antes del lanzamiento</span>
@@ -2042,8 +2173,6 @@
                 </div>
                 
                 <div class="form-box">
-                    <p class="form-title">Quiero entrar al lanzamiento</p>
-                    <p class="form-sub">Déjanos tu correo y te contactaremos con el descuento de bienvenida.</p>
                     <p class="form-highlight">Periodo de lanzamiento limitado, no te quedes fuera.</p>
                     
                     <form id="signupForm" class="form-fields" novalidate>
@@ -2073,41 +2202,9 @@
 <footer style="padding: 0 1.5rem 3rem;">
     <div class="container" style="padding:0;">
         <div class="footer-inner">
-            <div class="footer-grid">
-                <div>
-                    <div class="footer-brand">Pymefy <span class="footer-brand-tag">CL</span></div>
-                    <p class="footer-blurb">La plataforma integral para digitalizar, formalizar y hacer crecer tu negocio chileno. Todo en un solo lugar.</p>
-                </div>
-                <div>
-                    <p class="footer-section">Producto</p>
-                    <ul class="footer-links">
-                        <li><a href="#templates" class="footer-link">Plantillas</a></li>
-                        <li><a href="#plans" class="footer-link">Precios</a></li>
-                        <li><a href="#erp" class="footer-link">ERP</a></li>
-                        <li><a href="#" class="footer-link">API</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <p class="footer-section">Empresa</p>
-                    <ul class="footer-links">
-                        <li><a href="#" class="footer-link">Sobre nosotros</a></li>
-                        <li><a href="#" class="footer-link">Blog</a></li>
-                        <li><a href="#" class="footer-link">Carreras</a></li>
-                        <li><a href="#signup" class="footer-link">Contacto</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <p class="footer-section">Legal</p>
-                    <ul class="footer-links">
-                        <li><a href="#" class="footer-link">Términos</a></li>
-                        <li><a href="#" class="footer-link">Privacidad</a></li>
-                        <li><a href="#" class="footer-link">Cookies</a></li>
-                        <li><a href="#" class="footer-link">Licencias</a></li>
-                    </ul>
-                </div>
-            </div>
+           
             <div class="footer-bottom">
-                <span>© 2024 Pymefy. Todos los derechos reservados.</span>
+                <span>© 2026 Pymefy. Todos los derechos reservados.</span>
                 <span>Hecho con ❤️ en Chile</span>
             </div>
         </div>
@@ -2115,6 +2212,299 @@
 </footer>
 
 <script>
+    // ── CONFIGURACIÓN OPCIONAL DE KLAVIYO ───────────────────────────────────
+    // Reemplaza los valores vacíos para activar el guardado real de correos.
+    // Este endpoint es client-side y usa la public API key / site ID de Klaviyo.
+    // Docs oficiales: Create Client Subscription.
+    window.PYMEFY_KLAVIYO_CONFIG = {
+        provider: 'klaviyo',
+        klaviyoCompanyId: 'RZFzAr',
+        klaviyoRevision: '2026-04-15',
+        lists: {
+            riders: {
+                listId: 'Y2Mqac',
+                sourceLabel: 'Pymefy Riders Landing',
+                roleInterest: 'repartidor'
+            },
+            earlyAccess: {
+                listId: 'XwZS5Q',
+                sourceLabel: 'Pymefy Acceso Anticipado',
+                roleInterest: 'acceso_anticipado'
+            }
+        }
+    };
+
+    // ── RIDER CTA MORPH + CAPTURA DE EMAIL ──────────────────────────────────
+    (function () {
+        const config = window.PYMEFY_KLAVIYO_CONFIG || {};
+        const shell = document.getElementById('riderCaptureShell');
+        const ctaBtn = document.getElementById('riderCtaBtn');
+        const formWrap = document.getElementById('riderFormContainer');
+        const form = document.getElementById('riderForm');
+        const input = document.getElementById('riderEmailInput');
+        const closeBtn = document.getElementById('formCloseBtn');
+        const submitBtn = document.getElementById('riderSubmitBtn');
+        const submitText = document.getElementById('riderSubmitText');
+        const status = document.getElementById('riderFormStatus');
+        const successBox = document.getElementById('riderSuccessBox');
+
+        if (!shell || !ctaBtn || !formWrap || !form || !input || !submitBtn || !closeBtn || !submitText || !successBox) return;
+
+        function setStatus(message, type) {
+            if (!status) return;
+            status.textContent = message;
+            status.className = 'rider-form-status ' + (type || 'info');
+        }
+
+        function isValidEmail(value) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || '').trim());
+        }
+
+        function openForm() {
+            shell.classList.add('expanded');
+            ctaBtn.setAttribute('aria-expanded', 'true');
+            formWrap.setAttribute('aria-hidden', 'false');
+            window.setTimeout(function () {
+                input.focus({ preventScroll: true });
+            }, 260);
+        }
+
+        function closeForm() {
+            shell.classList.remove('expanded');
+            ctaBtn.setAttribute('aria-expanded', 'false');
+            formWrap.setAttribute('aria-hidden', 'true');
+            successBox.classList.remove('show');
+            form.style.display = '';
+            form.reset();
+            setStatus('Tus correos quedarán listos para tu base de repartidores.', 'info');
+        }
+
+        async function subscribeWithKlaviyo(email) {
+            const companyId = String(config.klaviyoCompanyId || '').trim();
+            const listId = String(config.lists && config.lists.riders && config.lists.riders.listId || '').trim();
+
+            if (!companyId) {
+                throw new Error('Configura tu Klaviyo public API key / site ID en window.PYMEFY_KLAVIYO_CONFIG.');
+            }
+
+            if (!listId) {
+                throw new Error('Configura la lista riders en window.PYMEFY_KLAVIYO_CONFIG para guardar los correos de repartidores.');
+            }
+
+            const payload = {
+                data: {
+                    type: 'subscription',
+                    attributes: {
+                        custom_source: (config.lists && config.lists.riders && config.lists.riders.sourceLabel) || 'Pymefy Riders Landing',
+                        profile: {
+                            data: {
+                                type: 'profile',
+                                attributes: {
+                                    email: email,
+                                    subscriptions: {
+                                        email: {
+                                            marketing: {
+                                                consent: 'SUBSCRIBED'
+                                            }
+                                        }
+                                    },
+                                    properties: {
+                                        source: (config.lists && config.lists.riders && config.lists.riders.sourceLabel) || 'Pymefy Riders Landing',
+                                        role_interest: (config.lists && config.lists.riders && config.lists.riders.roleInterest) || 'repartidor',
+                                        page: window.location.href
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    relationships: {
+                        list: {
+                            data: {
+                                type: 'list',
+                                id: listId
+                            }
+                        }
+                    }
+                }
+            };
+
+            const response = await fetch('https://a.klaviyo.com/client/subscriptions/?company_id=' + encodeURIComponent(companyId), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'revision': config.klaviyoRevision || '2026-04-15'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok && response.status !== 202) {
+                let detail = 'No fue posible guardar tu correo.';
+                try {
+                    const data = await response.json();
+                    detail = data && data.errors && data.errors[0] && data.errors[0].detail ? data.errors[0].detail : detail;
+                } catch (error) {}
+                throw new Error(detail);
+            }
+        }
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            const email = input.value.trim();
+
+            if (!isValidEmail(email)) {
+                setStatus('Ingresa un correo válido para postular.', 'error');
+                input.focus();
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitText.textContent = 'Enviando...';
+            setStatus('Guardando tu correo...', 'info');
+
+            try {
+                await subscribeWithKlaviyo(email);
+                form.style.display = 'none';
+                successBox.classList.add('show');
+                setStatus('Correo guardado correctamente en Klaviyo.', 'success');
+            } catch (error) {
+                setStatus(error && error.message ? error.message : 'Ocurrió un error al guardar tu correo.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitText.textContent = 'Enviar postulación';
+            }
+        }
+
+        ctaBtn.addEventListener('click', openForm);
+        closeBtn.addEventListener('click', closeForm);
+        form.addEventListener('submit', handleSubmit);
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && shell.classList.contains('expanded')) {
+                closeForm();
+            }
+        });
+    })();
+
+    // ── SIGNUP FORM: ACCESO ANTICIPADO A LISTA SEPARADA ─────────────────────
+    (function () {
+        const config = window.PYMEFY_KLAVIYO_CONFIG || {};
+        const form = document.getElementById('signupForm');
+        const input = document.getElementById('emailInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const formMsg = document.getElementById('formMsg');
+
+        if (!form || !input || !submitBtn || !formMsg) return;
+
+        function setMessage(message, type) {
+            formMsg.textContent = message;
+            formMsg.className = 'form-msg ' + (type || 'info');
+        }
+
+        function isValidEmail(value) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || '').trim());
+        }
+
+        async function subscribeEarlyAccess(email) {
+            const companyId = String(config.klaviyoCompanyId || '').trim();
+            const revision = String(config.klaviyoRevision || '2026-04-15').trim();
+            const listCfg = config.lists && config.lists.earlyAccess ? config.lists.earlyAccess : {};
+            const listId = String(listCfg.listId || '').trim();
+
+            if (!companyId) {
+                throw new Error('Configura tu Klaviyo public API key / site ID en window.PYMEFY_KLAVIYO_CONFIG.');
+            }
+
+            if (!listId) {
+                throw new Error('Configura la lista earlyAccess en window.PYMEFY_KLAVIYO_CONFIG para guardar los correos de acceso anticipado.');
+            }
+
+            const payload = {
+                data: {
+                    type: 'subscription',
+                    attributes: {
+                        custom_source: listCfg.sourceLabel || 'Pymefy Acceso Anticipado',
+                        profile: {
+                            data: {
+                                type: 'profile',
+                                attributes: {
+                                    email: email,
+                                    subscriptions: {
+                                        email: {
+                                            marketing: {
+                                                consent: 'SUBSCRIBED'
+                                            }
+                                        }
+                                    },
+                                    properties: {
+                                        source: listCfg.sourceLabel || 'Pymefy Acceso Anticipado',
+                                        role_interest: listCfg.roleInterest || 'acceso_anticipado',
+                                        page: window.location.href
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    relationships: {
+                        list: {
+                            data: {
+                                type: 'list',
+                                id: listId
+                            }
+                        }
+                    }
+                }
+            };
+
+            const response = await fetch('https://a.klaviyo.com/client/subscriptions/?company_id=' + encodeURIComponent(companyId), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'revision': revision
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok && response.status !== 202) {
+                let detail = 'No fue posible guardar tu correo.';
+                try {
+                    const data = await response.json();
+                    detail = data && data.errors && data.errors[0] && data.errors[0].detail ? data.errors[0].detail : detail;
+                } catch (error) {}
+                throw new Error(detail);
+            }
+        }
+
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const email = input.value.trim();
+
+            if (!isValidEmail(email)) {
+                setMessage('Ingresa un correo válido para acceder al lanzamiento.', 'err');
+                input.focus();
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.classList.add('spin');
+            setMessage('Guardando tu correo en acceso anticipado...', 'info');
+
+            try {
+                await subscribeEarlyAccess(email);
+                form.reset();
+                submitBtn.classList.add('ok');
+                setMessage('Listo. Tu correo quedó registrado en la lista de acceso anticipado.', 'ok');
+            } catch (error) {
+                setMessage(error && error.message ? error.message : 'Ocurrió un error al guardar tu correo.', 'err');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('spin');
+                window.setTimeout(function () {
+                    submitBtn.classList.remove('ok');
+                }, 1800);
+            }
+        });
+    })();
+
     // ── RIDER SCROLL-SCRUBBED ANIMATION ──────────────────────────────────────
     // Compatible con todos los navegadores modernos porque usa JS + scroll nativo.
     // Frame 1: cuando el componente empieza a entrar al viewport.
@@ -2155,13 +2545,9 @@
         function getProgress() {
             const rect = section.getBoundingClientRect();
             const vh = window.innerHeight || document.documentElement.clientHeight;
-
-            // 0 => top de la sección toca el borde inferior del viewport
-            // 1 => bottom de la sección toca el borde superior del viewport
             const totalDistance = rect.height + vh;
             const travelled = vh - rect.top;
             const rawProgress = travelled / totalDistance;
-
             return Math.max(0, Math.min(1, rawProgress));
         }
 
@@ -2181,7 +2567,6 @@
 
         function requestTick() {
             if (ticking) return;
-
             ticking = true;
             window.requestAnimationFrame(function () {
                 updateRiderAnimation();
