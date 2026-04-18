@@ -375,7 +375,7 @@
         /* ── TRUST STRIP ── */
         .trust-strip { padding: 0 1.5rem; }
         .trust-strip-inner {
-            max-width: 900px; margin: 0 auto;
+            max-width: 1000px; margin: 0 auto;
             display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2rem;
             padding: 1.25rem 1.5rem; border-radius: 2rem;
             border: 1px solid rgba(0,0,0,0.08); background: rgba(255,255,255,0.5);
@@ -1466,6 +1466,449 @@
         .footer-link { font-size: 0.875rem; color: rgba(255,255,255,0.55); transition: color 0.2s; }
         .footer-link:hover { color: #fff; }
         .footer-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; font-size: 0.8125rem; color: rgba(255,255,255,0.35); }
+
+        /* ── AGENTE IA ── */
+        @keyframes agent-float { 0%,100%{transform:translateY(0) rotate(-1deg);}50%{transform:translateY(-14px) rotate(1deg);} }
+        @keyframes bubble-in { from{opacity:0;transform:translateY(10px) scale(0.94);}to{opacity:1;transform:translateY(0) scale(1);} }
+        @keyframes typing-dot { 0%,80%,100%{transform:scale(0.6);opacity:0.4;}40%{transform:scale(1);opacity:1;} }
+        @keyframes wa-glow { 0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,0);}50%{box-shadow:0 0 0 12px rgba(37,211,102,0.08);} }
+        @keyframes agent-blink { 0%,90%,100%{opacity:1;}92%,98%{opacity:0;} }
+        @keyframes status-pulse { 0%,100%{opacity:1;}50%{opacity:0.5;} }
+
+        .agent-section {
+            position: relative; overflow: hidden;
+            background: linear-gradient(160deg, #0f0d0a 0%, #1a1410 50%, #0d1a12 100%);
+            padding: 6rem 0 5rem;
+        }
+        .agent-section::before {
+            content:''; position:absolute; inset:0; pointer-events:none;
+            background: radial-gradient(ellipse 80% 60% at 70% 30%, rgba(187,77,0,0.07), transparent 60%),
+                        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(37,211,102,0.06), transparent 55%);
+        }
+        .agent-grid {
+            display: grid; gap: 4rem; align-items: center;
+        }
+        @media(min-width:1024px){ .agent-grid{ grid-template-columns: 1fr 1fr; gap: 5rem; } }
+
+        /* LEFT TEXT */
+        .agent-eyebrow {
+            display: inline-flex; align-items: center; gap: 0.625rem;
+            padding: 0.4rem 1.125rem; border-radius: 9999px;
+            background: rgba(37,211,102,0.1); border: 1px solid rgba(37,211,102,0.22);
+            font-size: 0.6875rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.2em; color: #25d366;
+        }
+        .agent-eyebrow svg { width:14px; height:14px; }
+        .agent-title {
+            font-family: var(--font-title); font-weight: 700;
+            font-size: clamp(2rem, 4.5vw, 3.25rem);
+            letter-spacing: -0.055em; line-height: 1.1;
+            color: #fff; margin-top: 1.5rem;
+        }
+        .agent-title span { 
+            background: linear-gradient(90deg, #25d366, #128c7e);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .agent-desc {
+            font-size: 1rem; line-height: 2; color: rgba(255,255,255,0.58);
+            margin-top: 1.375rem; max-width: 28rem;
+        }
+
+        .agent-features { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 2rem; }
+        .agent-feat {
+            display: flex; align-items: flex-start; gap: 1rem;
+            padding: 1rem 1.25rem; border-radius: 1.5rem;
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+            cursor: pointer; transition: all 0.25s ease;
+        }
+        .agent-feat:hover, .agent-feat.active {
+            background: rgba(37,211,102,0.07); border-color: rgba(37,211,102,0.2);
+            transform: translateX(6px);
+        }
+        .agent-feat-icon {
+            width: 2.25rem; height: 2.25rem; border-radius: 0.875rem; flex-shrink: 0;
+            background: rgba(37,211,102,0.12); border: 1px solid rgba(37,211,102,0.18);
+            display: flex; align-items: center; justify-content: center; font-size: 1rem;
+        }
+        .agent-feat.active .agent-feat-icon { background: rgba(37,211,102,0.22); }
+        .agent-feat-title { font-size: 0.9375rem; font-weight: 600; color: #fff; }
+        .agent-feat-text { font-size: 0.8rem; line-height: 1.65; color: rgba(255,255,255,0.5); margin-top: 0.2rem; }
+
+        .agent-cta { margin-top: 2.25rem; }
+        .btn-wa {
+            display: inline-flex; align-items: center; gap: 0.75rem;
+            padding: 0.9rem 1.875rem; border-radius: 9999px;
+            background: #25d366; color: #fff; font-weight: 700; font-size: 0.9375rem;
+            box-shadow: 0 8px 24px rgba(37,211,102,0.28); transition: all 0.25s ease;
+        }
+        .btn-wa:hover { background: #128c7e; transform: translateY(-2px); box-shadow: 0 12px 32px rgba(37,211,102,0.38); }
+        .btn-wa svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+        /* RIGHT – ILLUSTRATION + PHONE */
+        .agent-visual {
+            position: relative; display: flex;
+            justify-content: center; align-items: flex-end;
+            min-height: 540px;
+        }
+        .agent-robot-wrap {
+            position: absolute; bottom: 0; left: 5%;
+            transform: translateX(-50%);
+            width: 260px; z-index: 2;
+            animation: agent-float 5s ease-in-out infinite;
+        }
+        .agent-robot-wrap svg { width: 100%; height: auto; filter: drop-shadow(0 30px 60px rgba(37,211,102,0.15)); }
+        
+        .agent-glow-orb {
+            position: absolute; bottom: 0; left: 5%; transform: translateX(-50%);
+            width: 300px; height: 120px; border-radius: 50%;
+            background: radial-gradient(ellipse, rgba(37,211,102,0.12), transparent 70%);
+            filter: blur(2rem); z-index: 1; pointer-events: none;
+        }
+
+        /* PHONE MOCKUP */
+        .agent-phone-wrap {
+            position: absolute; right: -10px; top: 20px;
+            z-index: 10;
+        }
+        @media(max-width:1023px){ .agent-phone-wrap { position: relative; right: auto; top: auto; margin-bottom: -80px; } }
+        
+        .agent-phone {
+            width: 220px; background: #1a1a1a;
+            border-radius: 2rem; overflow: hidden;
+            border: 3px solid rgba(255,255,255,0.08);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+            animation: wa-glow 4s ease-in-out infinite;
+        }
+        .phone-notch {
+            background: #000; height: 24px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .phone-notch-pill {
+            width: 60px; height: 10px; background: #1a1a1a; border-radius: 9999px;
+        }
+        .wa-header {
+            background: #075e54; padding: 0.625rem 0.875rem;
+            display: flex; align-items: center; gap: 0.625rem;
+        }
+        .wa-avatar {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; flex-shrink: 0;
+        }
+        .wa-name { font-size: 0.75rem; font-weight: 600; color: #fff; }
+        .wa-status { font-size: 0.6rem; color: rgba(255,255,255,0.65); display: flex; align-items: center; gap: 3px; }
+        .wa-status-dot { width: 5px; height: 5px; border-radius: 50%; background: #25d366; animation: status-pulse 2s ease infinite; }
+        .wa-body { background: #0b141a; padding: 0.625rem; min-height: 320px; max-height: 320px; overflow: hidden; display: flex; flex-direction: column; gap: 0.5rem; }
+        .wa-date-chip {
+            text-align: center; font-size: 0.55rem; color: rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 9999px;
+            align-self: center; margin-bottom: 0.25rem;
+        }
+        .wa-bubble {
+            max-width: 90%; padding: 0.45rem 0.65rem; border-radius: 0.875rem;
+            font-size: 0.6rem; line-height: 1.55; position: relative;
+        }
+        .wa-bubble.out {
+            background: #005c4b; color: #e9f5e1;
+            align-self: flex-end; border-bottom-right-radius: 3px;
+        }
+        .wa-bubble.in {
+            background: #202c33; color: rgba(255,255,255,0.85);
+            align-self: flex-start; border-bottom-left-radius: 3px;
+        }
+        .wa-bubble-time { font-size: 0.5rem; color: rgba(255,255,255,0.35); text-align: right; margin-top: 2px; }
+        .wa-typing {
+            background: #202c33; padding: 0.5rem 0.65rem; border-radius: 0.875rem;
+            border-bottom-left-radius: 3px; align-self: flex-start;
+            display: flex; align-items: center; gap: 4px; display: none;
+        }
+        .wa-typing.show { display: flex; }
+        .wa-typing span {
+            width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.45);
+            animation: typing-dot 1.2s ease-in-out infinite;
+        }
+        .wa-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .wa-typing span:nth-child(3) { animation-delay: 0.4s; }
+        .wa-input-bar {
+            background: #1f2c33; padding: 0.5rem; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .wa-fake-input { flex: 1; background: #2a3942; border-radius: 9999px; padding: 0.4rem 0.75rem; font-size: 0.6rem; color: rgba(255,255,255,0.35); }
+        .wa-send-btn { width: 28px; height: 28px; border-radius: 50%; background: #00a884; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .wa-send-btn svg { width: 14px; height: 14px; color: #fff; }
+
+        /* FLOATING BADGES */
+        .agent-badge-float {
+            position: absolute; padding: 0.5rem 0.875rem;
+            border-radius: 9999px; font-size: 0.7rem; font-weight: 600;
+            backdrop-filter: blur(12px); white-space: nowrap; z-index: 15;
+        }
+        .abf-1 {
+            top: 30px; left: 0;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.8);
+            animation: float-y 3.5s ease-in-out infinite;
+        }
+        .abf-2 {
+            bottom: 130px; left: -20px;
+            background: rgba(37,211,102,0.14); border: 1px solid rgba(37,211,102,0.25); color: #25d366;
+            animation: float-y 4s ease-in-out 1s infinite;
+        }
+        /* ── MARKETPLACE ── */
+        @keyframes mp-float-a { 0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-12px) rotate(2deg);} }
+        @keyframes mp-float-b { 0%,100%{transform:translateY(0) rotate(1deg);}50%{transform:translateY(-9px) rotate(-1deg);} }
+        @keyframes mp-card-in { from{opacity:0;transform:translateY(24px) scale(0.96);}to{opacity:1;transform:translateY(0) scale(1);} }
+        @keyframes mp-shine { 0%{background-position:-200% center;}100%{background-position:200% center;} }
+        @keyframes mp-pulse-border { 0%,100%{border-color:rgba(99,102,241,0.25);}50%{border-color:rgba(99,102,241,0.55);} }
+        @keyframes mp-orbit { from{transform:rotate(0deg) translateX(90px) rotate(0deg);}to{transform:rotate(360deg) translateX(90px) rotate(-360deg);} }
+        @keyframes mp-tag-in { from{opacity:0;transform:scale(0.8);}to{opacity:1;transform:scale(1);} }
+
+        .mp-section {
+            position:relative; overflow:hidden;
+            padding: 7rem 0 6rem;
+            background: var(--bg-alt);
+        }
+        .mp-section::before {
+            content:''; position:absolute; inset:0; pointer-events:none;
+            background: radial-gradient(ellipse 55% 40% at 90% 20%, rgba(99,102,241,0.06), transparent 60%),
+                        radial-gradient(ellipse 40% 30% at 10% 80%, rgba(187,77,0,0.05), transparent 55%);
+        }
+
+        /* ── HEADER ── */
+        .mp-eyebrow {
+            display: inline-flex; align-items: center; gap: 0.625rem;
+            padding: 0.4rem 1.125rem; border-radius: 9999px;
+            background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.2);
+            font-size: 0.6875rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.2em; color: #6366f1;
+        }
+        .mp-eyebrow svg { width:14px; height:14px; }
+        .mp-coming-pill {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.35rem 0.875rem; border-radius: 9999px;
+            background: rgba(187,77,0,0.08); border: 1px solid rgba(187,77,0,0.2);
+            font-size: 0.625rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.15em; color: var(--primary); margin-left: 0.75rem;
+        }
+        .mp-coming-dot { width:5px;height:5px;border-radius:50%;background:var(--primary);animation:ping 1.5s cubic-bezier(0,0,0.2,1) infinite; }
+        .mp-title {
+            font-family: var(--font-title); font-weight: 700;
+            font-size: clamp(2.25rem, 5vw, 3.75rem);
+            letter-spacing: -0.06em; line-height: 1.05; margin-top: 1.5rem;
+        }
+        .mp-title-gradient {
+            background: linear-gradient(110deg, #6366f1 0%, #8b5cf6 40%, #bb4d00 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            animation: mp-shine 4s linear infinite;
+        }
+        .mp-subtitle {
+            font-size: 1.0625rem; line-height: 1.9; color: var(--text-muted);
+            max-width: 42rem; margin-top: 1.5rem;
+        }
+
+        /* ── TAB SWITCHER ── */
+        .mp-tabs {
+            display: inline-flex; background: rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.08); border-radius: 9999px;
+            padding: 0.3rem; gap: 0.25rem; margin-top: 2.5rem;
+        }
+        .mp-tab {
+            padding: 0.6rem 1.375rem; border-radius: 9999px; cursor: pointer;
+            font-size: 0.875rem; font-weight: 600; color: var(--text-muted);
+            transition: all 0.25s ease; border: none; background: none;
+            font-family: var(--font-body);
+        }
+        .mp-tab.active {
+            background: var(--text); color: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+        }
+        .mp-tab:hover:not(.active) { color: var(--text); background: rgba(0,0,0,0.06); }
+
+        /* ── MAIN LAYOUT ── */
+        .mp-layout {
+            display: grid; gap: 2rem; margin-top: 3rem; align-items: start;
+        }
+        @media(min-width:1024px){ .mp-layout{ grid-template-columns: 1fr 1.1fr; gap: 3rem; } }
+
+        /* ── SUPPLIER PANEL (left) ── */
+        .mp-panel {
+            background: #fff; border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 2.5rem; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(88,68,43,0.07);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .mp-panel-header {
+            padding: 1.75rem 1.75rem 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            display: flex; align-items: center; gap: 1rem;
+        }
+        .mp-panel-icon {
+            width: 3rem; height: 3rem; border-radius: 1rem; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.25rem;
+        }
+        .mp-panel-title { font-size: 1.125rem; font-weight: 700; letter-spacing: -0.03em; }
+        .mp-panel-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem; }
+        .mp-panel-body { padding: 1.5rem 1.75rem; }
+
+        /* Supplier profile card */
+        .mp-profile-row {
+            display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem;
+            border: 1px solid rgba(0,0,0,0.07); border-radius: 1.5rem;
+            background: #faf8f5; margin-bottom: 1rem; cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .mp-profile-row:hover { border-color: rgba(99,102,241,0.3); background: rgba(99,102,241,0.03); transform: translateX(4px); }
+        .mp-profile-row.selected { border-color: rgba(99,102,241,0.4); background: rgba(99,102,241,0.05); }
+        .mp-profile-avatar { width:42px;height:42px;border-radius:50%;object-fit:cover;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem; }
+        .mp-profile-name { font-size:0.9375rem;font-weight:600; }
+        .mp-profile-type { font-size:0.75rem;color:var(--text-muted);margin-top:1px; }
+        .mp-profile-badge {
+            margin-left:auto; padding:0.25rem 0.75rem; border-radius:9999px;
+            font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;
+            flex-shrink:0;
+        }
+        .mp-badge-local { background:rgba(5,150,105,0.1);color:#059669; }
+        .mp-badge-drop { background:rgba(99,102,241,0.1);color:#6366f1; }
+        .mp-badge-new { background:rgba(217,119,6,0.1);color:#d97706; }
+
+        /* Product grid inside panel */
+        .mp-products { display: grid; grid-template-columns: repeat(2,1fr); gap: 0.875rem; margin-top: 1.25rem; }
+        .mp-product-card {
+            border: 1px solid rgba(0,0,0,0.07); border-radius: 1.25rem;
+            overflow: hidden; cursor: pointer; transition: all 0.25s ease;
+            background: #fff;
+        }
+        .mp-product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.09); border-color: rgba(99,102,241,0.25); }
+        .mp-product-card.added { border-color: rgba(5,150,105,0.4); box-shadow: 0 0 0 3px rgba(5,150,105,0.08); }
+        .mp-product-img { height: 80px; background: #f0ede8; display:flex;align-items:center;justify-content:center;font-size:1.75rem; }
+        .mp-product-info { padding: 0.625rem 0.75rem; }
+        .mp-product-name { font-size:0.75rem;font-weight:600;line-height:1.3; }
+        .mp-product-price { font-size:0.75rem;font-weight:700;color:var(--primary);margin-top:2px; }
+        .mp-product-origin { font-size:0.6rem;color:var(--text-muted);margin-top:1px; }
+        .mp-product-add {
+            display:flex;align-items:center;justify-content:center;gap:4px;
+            padding:0.375rem; background:var(--text); color:#fff;
+            font-size:0.625rem;font-weight:600; cursor:pointer;
+            border:none;width:100%;font-family:var(--font-body);
+            transition: background 0.2s;
+        }
+        .mp-product-add:hover { background: var(--primary); }
+        .mp-product-card.added .mp-product-add { background: var(--success); }
+        .mp-product-add svg { width:10px;height:10px; }
+
+        /* ── RIGHT MARKETPLACE VISUAL ── */
+        .mp-right { display: flex; flex-direction: column; gap: 1.5rem; }
+
+        /* Stats row */
+        .mp-stats-row { display:grid;grid-template-columns:repeat(3,1fr);gap:1rem; }
+        .mp-stat {
+            padding:1.25rem;border-radius:1.75rem;text-align:center;
+            border:1px solid rgba(0,0,0,0.07);background:#fff;
+            box-shadow:0 4px 16px rgba(0,0,0,0.04);
+        }
+        .mp-stat-val { font-size:1.625rem;font-weight:700;letter-spacing:-0.04em; }
+        .mp-stat-lbl { font-size:0.7rem;color:var(--text-muted);margin-top:0.25rem; }
+
+        /* How it works steps */
+        .mp-how { background:#fff;border:1px solid rgba(0,0,0,0.07);border-radius:2rem;padding:1.75rem;box-shadow:0 8px 24px rgba(0,0,0,0.04); }
+        .mp-how-title { font-size:0.875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--text-muted);margin-bottom:1.25rem; }
+        .mp-how-steps { display:flex;flex-direction:column;gap:0;position:relative; }
+        .mp-how-step { display:flex;gap:1rem;padding:1rem 0;position:relative; }
+        .mp-how-step:not(:last-child)::after {
+            content:''; position:absolute; left:18px; top:46px; bottom:-10px; width:2px;
+            background:linear-gradient(to bottom,rgba(99,102,241,0.3),transparent);
+        }
+        .mp-step-num {
+            width:36px;height:36px;border-radius:50%;flex-shrink:0;
+            display:flex;align-items:center;justify-content:center;
+            font-size:0.75rem;font-weight:700;color:#fff;
+            background:linear-gradient(135deg,#6366f1,#8b5cf6);
+            box-shadow:0 4px 12px rgba(99,102,241,0.3);
+        }
+        .mp-step-title { font-size:0.9375rem;font-weight:600; }
+        .mp-step-text { font-size:0.8rem;color:var(--text-muted);margin-top:0.2rem;line-height:1.6; }
+
+        /* Category cloud */
+        .mp-categories { display:flex;flex-wrap:wrap;gap:0.5rem;padding:1.5rem;background:#fff;border:1px solid rgba(0,0,0,0.07);border-radius:2rem;box-shadow:0 4px 16px rgba(0,0,0,0.04); }
+        .mp-cat-tag {
+            padding:0.4rem 0.9rem;border-radius:9999px;font-size:0.75rem;font-weight:500;
+            cursor:pointer;transition:all 0.2s ease;border:1px solid rgba(0,0,0,0.09);
+            background:rgba(0,0,0,0.02);color:var(--text);
+        }
+        .mp-cat-tag:hover,.mp-cat-tag.active { background:var(--text);color:#fff;border-color:var(--text);transform:scale(1.05); }
+        .mp-cat-tag.active { animation: mp-tag-in 0.2s ease; }
+
+        /* Cart summary */
+        .mp-cart {
+            background:linear-gradient(135deg,#1b1915,#2a251e);
+            border-radius:2rem;padding:1.5rem;color:#fff;
+            border:1px solid rgba(255,255,255,0.06);
+            box-shadow:0 20px 40px rgba(0,0,0,0.18);
+            display:none;
+        }
+        .mp-cart.visible { display:block; animation: mp-card-in 0.35s ease; }
+        .mp-cart-title { font-size:0.875rem;font-weight:700;color:rgba(255,255,255,0.9); }
+        .mp-cart-items { display:flex;flex-direction:column;gap:0.5rem;margin-top:0.875rem; }
+        .mp-cart-item { display:flex;align-items:center;gap:0.625rem;font-size:0.8rem;color:rgba(255,255,255,0.7); }
+        .mp-cart-item-dot { width:6px;height:6px;border-radius:50%;flex-shrink:0; }
+        .mp-cart-total { margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center; }
+        .mp-cart-total-lbl { font-size:0.75rem;color:rgba(255,255,255,0.5); }
+        .mp-cart-total-val { font-size:1.375rem;font-weight:700; }
+        .mp-cart-btn {
+            display:flex;align-items:center;justify-content:center;gap:0.5rem;
+            width:100%;padding:0.875rem;border-radius:1.25rem;margin-top:1rem;
+            background:var(--primary);color:#fff;font-weight:700;font-size:0.875rem;
+            border:none;cursor:pointer;font-family:var(--font-body);
+            transition:all 0.25s ease;
+        }
+        .mp-cart-btn:hover { background:var(--primary-dark);transform:translateY(-2px); }
+
+        /* Register CTA strip */
+        .mp-register-strip {
+            display:grid;gap:1rem;margin-top:3rem;padding:2.5rem;
+            background:linear-gradient(135deg,#0f0d0a,#1a1410);
+            border-radius:2.5rem;border:1px solid rgba(255,255,255,0.06);
+            box-shadow:0 28px 60px rgba(0,0,0,0.18);
+            position:relative;overflow:hidden;
+        }
+        @media(min-width:768px){ .mp-register-strip{grid-template-columns:1fr auto;align-items:center;} }
+        .mp-register-strip::before {
+            content:'';position:absolute;inset:0;pointer-events:none;
+            background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(99,102,241,0.08),transparent 60%);
+        }
+        .mp-reg-eyebrow { font-size:0.625rem;text-transform:uppercase;letter-spacing:0.22em;color:rgba(255,255,255,0.35); }
+        .mp-reg-title { font-family:var(--font-title);font-size:clamp(1.25rem,3vw,2rem);font-weight:700;letter-spacing:-0.05em;color:#fff;margin-top:0.625rem;line-height:1.15; }
+        .mp-reg-text { font-size:0.875rem;line-height:1.9;color:rgba(255,255,255,0.5);margin-top:0.75rem;max-width:30rem; }
+        .mp-reg-types { display:flex;flex-wrap:wrap;gap:0.625rem;margin-top:1.25rem; }
+        .mp-reg-type {
+            display:inline-flex;align-items:center;gap:0.5rem;
+            padding:0.5rem 1rem;border-radius:9999px;
+            border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);
+            font-size:0.8125rem;font-weight:500;color:rgba(255,255,255,0.7);
+        }
+        .mp-reg-type span { width:6px;height:6px;border-radius:50%;flex-shrink:0; }
+        .mp-reg-btns { display:flex;flex-direction:column;gap:0.75rem;flex-shrink:0; }
+        .mp-btn-provider {
+            display:inline-flex;align-items:center;justify-content:center;gap:0.625rem;
+            padding:0.9rem 1.75rem;border-radius:9999px;
+            background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;
+            font-weight:700;font-size:0.875rem;
+            box-shadow:0 8px 24px rgba(99,102,241,0.3);transition:all 0.25s ease;
+            white-space:nowrap;
+        }
+        .mp-btn-provider:hover { transform:translateY(-2px);box-shadow:0 14px 32px rgba(99,102,241,0.4); }
+        .mp-btn-provider svg { width:16px;height:16px; }
+        .mp-btn-buyer {
+            display:inline-flex;align-items:center;justify-content:center;gap:0.625rem;
+            padding:0.9rem 1.75rem;border-radius:9999px;
+            background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.8);
+            border:1px solid rgba(255,255,255,0.1);
+            font-weight:600;font-size:0.875rem;transition:all 0.25s ease;
+            white-space:nowrap;
+        }
+        .mp-btn-buyer:hover { background:rgba(255,255,255,0.12);transform:translateY(-2px); }
+        .mp-btn-buyer svg { width:16px;height:16px; }
     </style>
 </head>
 <body>
@@ -1490,6 +1933,8 @@
         <a href="#who" class="navbar-link" data-s="who">Qué es</a>
         <a href="#templates" class="navbar-link" data-s="templates">Plantillas</a>
         <a href="#erp" class="navbar-link" data-s="erp">ERP</a>
+        <a href="#agente" class="navbar-link" data-s="agente">IA Agente</a>
+        <a href="#marketplace" class="navbar-link" data-s="marketplace">Marketplace</a>
         <a href="#plans" class="navbar-link" data-s="plans">Planes</a>
       </nav>
     </div>
@@ -1503,6 +1948,8 @@
     <a href="#who" data-s="who">Qué es</a>
     <a href="#templates" data-s="templates">Plantillas</a>
     <a href="#erp" data-s="erp">ERP</a>
+    <a href="#agente" data-s="agente">IA Agente</a>
+    <a href="#marketplace" data-s="marketplace">Marketplace</a>
     <a href="#plans" data-s="plans">Planes</a>
     <a href="#signup" class="btn-primary" style="margin-top:.75rem; border-radius:1.25rem; justify-content:center;">Inscribirse →</a>
   </div>
@@ -1941,6 +2388,390 @@
             </div>
         </div>
     </div>
+</section>
+
+<!-- AGENTE IA -->
+<section id="agente" class="agent-section">
+    <div class="container">
+        <div class="agent-grid scroll-reveal">
+
+            <!-- LEFT: TEXT CONTENT -->
+            <div>
+                <div class="agent-eyebrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1H1a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/><circle cx="9" cy="16" r="1" fill="currentColor"/><circle cx="15" cy="16" r="1" fill="currentColor"/></svg>
+                    IA Propia de Pymefy
+                </div>
+
+                <h2 class="agent-title">Tu Agente Personal<br><span>Financiero IA</span></h2>
+
+                <p class="agent-desc">
+                    Pymefy cuenta con su propia inteligencia artificial que actúa como un asistente personal para tu negocio. Disponible 24/7 directamente en <strong style="color:rgba(255,255,255,0.8)">WhatsApp</strong>, sin abrir el dashboard.
+                </p>
+
+                <div class="agent-features">
+                    <div class="agent-feat active" data-scenario="0">
+                        <div class="agent-feat-icon">📅</div>
+                        <div>
+                            <p class="agent-feat-title">Confirma citas automáticamente</p>
+                            <p class="agent-feat-text">El agente escribe a tus clientes, confirma la hora reservada y envía recordatorios antes de la cita.</p>
+                        </div>
+                    </div>
+                    <div class="agent-feat" data-scenario="1">
+                        <div class="agent-feat-icon">💬</div>
+                        <div>
+                            <p class="agent-feat-title">Envía mensajes a clientes</p>
+                            <p class="agent-feat-text">Campañas, cobros, recordatorios y seguimiento post-servicio, todo orquestado por la IA sin intervención tuya.</p>
+                        </div>
+                    </div>
+                    <div class="agent-feat" data-scenario="2">
+                        <div class="agent-feat-icon">📊</div>
+                        <div>
+                            <p class="agent-feat-title">Control total por WhatsApp</p>
+                            <p class="agent-feat-text">Pregúntale "¿cuánto vendí hoy?" o "¿quién no ha pagado?" y recibe un reporte al instante desde el chat.</p>
+                        </div>
+                    </div>
+                    <div class="agent-feat" data-scenario="3">
+                        <div class="agent-feat-icon">🚀</div>
+                        <div>
+                            <p class="agent-feat-title">Gestiona tu negocio sin entrar al dashboard</p>
+                            <p class="agent-feat-text">Agrega productos, cierra ventas o revisa tu agenda hablándole al agente como si fuera un empleado tuyo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="agent-cta">
+                    <a href="#signup" class="btn-wa">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Probar el Agente IA
+                    </a>
+                </div>
+            </div>
+
+            <!-- RIGHT: ROBOT + PHONE MOCKUP -->
+            <div class="agent-visual">
+                <div class="agent-glow-orb"></div>
+
+                <!-- FLOATING LABELS -->
+              
+                <div class="agent-badge-float abf-2">✓ Respuesta en segundos</div>
+
+                <!-- PHONE MOCKUP -->
+                <div class="agent-phone-wrap">
+                    <div class="agent-phone">
+                        <div class="phone-notch"><div class="phone-notch-pill"></div></div>
+                        <div class="wa-header">
+                            <div class="wa-avatar">🤖</div>
+                            <div>
+                                <p class="wa-name">Agente Pymefy IA</p>
+                                <div class="wa-status"><span class="wa-status-dot"></span>En línea</div>
+                            </div>
+                        </div>
+                        <div class="wa-body" id="waChatBody">
+                            <div class="wa-date-chip">Hoy</div>
+                            <!-- Bubbles injected by JS -->
+                        </div>
+                        <div class="wa-input-bar">
+                            <div class="wa-fake-input">Escribe un mensaje...</div>
+                            <div class="wa-send-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ROBOT SVG ILLUSTRATION -->
+                <div class="agent-robot-wrap">
+                    <svg viewBox="0 0 260 380" xmlns="http://www.w3.org/2000/svg" fill="none">
+                        <!-- Glow effect -->
+                        <defs>
+                            <radialGradient id="robotGlow" cx="50%" cy="100%" r="50%">
+                                <stop offset="0%" stop-color="#25d366" stop-opacity="0.3"/>
+                                <stop offset="100%" stop-color="#25d366" stop-opacity="0"/>
+                            </radialGradient>
+                            <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#2a2a2a"/>
+                                <stop offset="100%" stop-color="#1a1a1a"/>
+                            </linearGradient>
+                            <linearGradient id="headGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#333"/>
+                                <stop offset="100%" stop-color="#1f1f1f"/>
+                            </linearGradient>
+                            <linearGradient id="screenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#075e54"/>
+                                <stop offset="100%" stop-color="#128c7e"/>
+                            </linearGradient>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="3" result="blur"/>
+                                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            </filter>
+                        </defs>
+
+                        <!-- Shadow -->
+                        <ellipse cx="130" cy="370" rx="70" ry="10" fill="rgba(37,211,102,0.08)"/>
+
+                        <!-- Legs -->
+                        <rect x="90" y="280" width="28" height="70" rx="14" fill="url(#bodyGrad)"/>
+                        <rect x="142" y="280" width="28" height="70" rx="14" fill="url(#bodyGrad)"/>
+                        <!-- Feet -->
+                        <rect x="82" y="336" width="44" height="18" rx="9" fill="#222"/>
+                        <rect x="134" y="336" width="44" height="18" rx="9" fill="#222"/>
+
+                        <!-- Body -->
+                        <rect x="68" y="160" width="124" height="130" rx="24" fill="url(#bodyGrad)"/>
+                        <!-- Body detail lines -->
+                        <rect x="84" y="178" width="92" height="4" rx="2" fill="rgba(37,211,102,0.2)"/>
+                        <rect x="84" y="190" width="60" height="4" rx="2" fill="rgba(255,255,255,0.08)"/>
+
+                        <!-- Chest screen / badge -->
+                        <rect x="86" y="206" width="88" height="54" rx="12" fill="#0b141a" stroke="rgba(37,211,102,0.3)" stroke-width="1.5"/>
+                        <!-- Chest display lines (mini whatsapp) -->
+                        <rect x="96" y="216" width="14" height="14" rx="7" fill="#25d366" opacity="0.9"/>
+                        <rect x="116" y="218" width="32" height="4" rx="2" fill="rgba(255,255,255,0.6)"/>
+                        <rect x="116" y="226" width="22" height="3" rx="1.5" fill="rgba(255,255,255,0.3)"/>
+                        <rect x="96" y="236" width="68" height="3" rx="1.5" fill="rgba(37,211,102,0.4)"/>
+                        <rect x="96" y="243" width="50" height="3" rx="1.5" fill="rgba(37,211,102,0.25)"/>
+                        <rect x="96" y="250" width="40" height="3" rx="1.5" fill="rgba(37,211,102,0.15)"/>
+
+                        <!-- Body bottom detail -->
+                        <circle cx="108" cy="276" r="6" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                        <circle cx="130" cy="276" r="6" fill="rgba(37,211,102,0.2)" stroke="rgba(37,211,102,0.4)" stroke-width="1"/>
+                        <circle cx="152" cy="276" r="6" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+
+                        <!-- Left arm (extended/relaxed) -->
+                        <rect x="36" y="168" width="36" height="22" rx="11" fill="url(#bodyGrad)"/>
+                        <circle cx="36" cy="179" r="14" fill="#2a2a2a" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+                        <!-- Right arm (holding phone, angled up) -->
+                        <rect x="190" y="150" width="36" height="22" rx="11" fill="url(#bodyGrad)" transform="rotate(-20 208 161)"/>
+
+                        <!-- Phone in right hand -->
+                        <g transform="translate(195,108) rotate(8)">
+                            <rect x="0" y="0" width="42" height="68" rx="7" fill="#111" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+                            <!-- Phone screen -->
+                            <rect x="3" y="8" width="36" height="55" rx="4" fill="url(#screenGrad)"/>
+                            <!-- WhatsApp logo on screen -->
+                            <circle cx="21" cy="30" r="10" fill="rgba(255,255,255,0.15)"/>
+                            <text x="21" y="35" font-size="12" text-anchor="middle" fill="white" opacity="0.9">📱</text>
+                            <!-- Chat lines on screen -->
+                            <rect x="7" y="45" width="22" height="3" rx="1.5" fill="rgba(255,255,255,0.5)"/>
+                            <rect x="7" y="52" width="16" height="3" rx="1.5" fill="rgba(255,255,255,0.3)"/>
+                            <!-- Notch -->
+                            <rect x="14" y="2" width="14" height="4" rx="2" fill="#0a0a0a"/>
+                        </g>
+
+                        <!-- Neck -->
+                        <rect x="112" y="136" width="36" height="28" rx="10" fill="#252525"/>
+
+                        <!-- Head -->
+                        <rect x="62" y="60" width="136" height="88" rx="28" fill="url(#headGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+                        <!-- Ear antennas -->
+                        <rect x="60" y="82" width="6" height="20" rx="3" fill="#222"/>
+                        <circle cx="63" cy="80" r="5" fill="#25d366" filter="url(#glow)"/>
+                        <rect x="194" y="82" width="6" height="20" rx="3" fill="#222"/>
+                        <circle cx="197" cy="80" r="5" fill="#25d366" filter="url(#glow)"/>
+
+                        <!-- Top antenna -->
+                        <rect x="127" y="38" width="6" height="26" rx="3" fill="#333"/>
+                        <circle cx="130" cy="36" r="7" fill="#bb4d00" filter="url(#glow)"/>
+                        <circle cx="130" cy="36" r="4" fill="#e8720a"/>
+
+                        <!-- Eyes -->
+                        <rect x="84" y="88" width="36" height="24" rx="10" fill="#0b141a"/>
+                        <rect x="140" y="88" width="36" height="24" rx="10" fill="#0b141a"/>
+                        <!-- Eye glow -->
+                        <rect x="88" y="92" width="28" height="16" rx="7" fill="#25d366" opacity="0.85" id="eyeL"/>
+                        <rect x="144" y="92" width="28" height="16" rx="7" fill="#25d366" opacity="0.85" id="eyeR"/>
+                        <!-- Eye pupils -->
+                        <circle cx="102" cy="100" r="5" fill="#064e3b"/>
+                        <circle cx="158" cy="100" r="5" fill="#064e3b"/>
+                        <circle cx="104" cy="98" r="2" fill="rgba(255,255,255,0.6)"/>
+                        <circle cx="160" cy="98" r="2" fill="rgba(255,255,255,0.6)"/>
+
+                        <!-- Mouth -->
+                        <rect x="96" y="124" width="68" height="10" rx="5" fill="#0b141a"/>
+                        <rect x="102" y="126" width="56" height="6" rx="3" fill="#25d366" opacity="0.5"/>
+                        <rect x="108" y="127" width="44" height="4" rx="2" fill="#25d366" opacity="0.7"/>
+
+                        <!-- Head details -->
+                        <rect x="76" y="108" width="8" height="4" rx="2" fill="rgba(255,165,0,0.5)"/>
+                        <rect x="176" y="108" width="8" height="4" rx="2" fill="rgba(255,165,0,0.5)"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MARKETPLACE -->
+<section id="marketplace" class="mp-section">
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="scroll-reveal" style="max-width:52rem;">
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.75rem;">
+        <div class="mp-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7"/></svg>
+          Próximamente
+        </div>
+        <div class="mp-coming-pill"><span class="mp-coming-dot"></span>En desarrollo</div>
+      </div>
+      <h2 class="mp-title">El Marketplace que<br><span class="mp-title-gradient">conecta proveedores con pymes.</span></h2>
+      <p class="mp-subtitle">Un espacio donde proveedores locales y de dropshipping ofrecen sus productos directamente a los dueños de negocios que operan en Pymefy. Sin intermediarios. Sin bodegas. Sin complicaciones.</p>
+
+      <!-- TAB SWITCHER -->
+      <div class="mp-tabs" role="tablist">
+        <button class="mp-tab active" data-tab="proveedor" role="tab">Soy Proveedor</button>
+        <button class="mp-tab" data-tab="comerciante" role="tab">Soy Comerciante</button>
+      </div>
+    </div>
+
+    <!-- MAIN INTERACTIVE LAYOUT -->
+    <div class="mp-layout scroll-reveal">
+
+      <!-- LEFT: SUPPLIER / MERCHANT PANEL -->
+      <div>
+        <!-- PROVEEDOR VIEW -->
+        <div id="mpPanelProveedor" class="mp-panel">
+          <div class="mp-panel-header">
+            <div class="mp-panel-icon" style="background:rgba(99,102,241,0.1);">🏭</div>
+            <div>
+              <p class="mp-panel-title">Registro de Proveedor</p>
+              <p class="mp-panel-sub">Publica tus productos a toda la red Pymefy</p>
+            </div>
+          </div>
+          <div class="mp-panel-body">
+            <p style="font-size:0.8125rem;color:var(--text-muted);margin-bottom:1.125rem;">Proveedores activos en lista de espera</p>
+            <div class="mp-profile-row selected" data-supplier="0">
+              <div class="mp-profile-avatar" style="background:#e8eafb;">🏪</div>
+              <div>
+                <p class="mp-profile-name">Distribuidora Don Pedro</p>
+                <p class="mp-profile-type">Abarrotes · Santiago, Chile</p>
+              </div>
+              <span class="mp-profile-badge mp-badge-local">Local</span>
+            </div>
+            <div class="mp-profile-row" data-supplier="1">
+              <div class="mp-profile-avatar" style="background:#fef3c7;">🧴</div>
+              <div>
+                <p class="mp-profile-name">BellezaDropCL</p>
+                <p class="mp-profile-type">Cosméticos · Dropshipping</p>
+              </div>
+              <span class="mp-profile-badge mp-badge-drop">Dropship</span>
+            </div>
+            <div class="mp-profile-row" data-supplier="2">
+              <div class="mp-profile-avatar" style="background:#d1fae5;">🍃</div>
+              <div>
+                <p class="mp-profile-name">Orgánicos del Sur</p>
+                <p class="mp-profile-type">Alimentos orgánicos · Concepción</p>
+              </div>
+              <span class="mp-profile-badge mp-badge-new">Nuevo</span>
+            </div>
+
+            <!-- Products of selected supplier -->
+            <div style="margin-top:1.5rem;">
+              <p style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.15em;color:var(--text-muted);margin-bottom:0.75rem;" id="mpSupplierLabel">Productos — Distribuidora Don Pedro</p>
+              <div class="mp-products" id="mpProductGrid">
+                <!-- Injected by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMERCIANTE VIEW -->
+        <div id="mpPanelComerciante" class="mp-panel" style="display:none;">
+          <div class="mp-panel-header">
+            <div class="mp-panel-icon" style="background:rgba(187,77,0,0.1);">🛒</div>
+            <div>
+              <p class="mp-panel-title">Tu Catálogo de Abastecimiento</p>
+              <p class="mp-panel-sub">Encuentra y agrega productos a tu tienda</p>
+            </div>
+          </div>
+          <div class="mp-panel-body">
+            <p style="font-size:0.8125rem;color:var(--text-muted);margin-bottom:1rem;">Filtrar por categoría</p>
+            <div class="mp-categories" id="mpCatFilter">
+              <span class="mp-cat-tag active" data-cat="all">Todos</span>
+              <span class="mp-cat-tag" data-cat="abarrotes">🛒 Abarrotes</span>
+              <span class="mp-cat-tag" data-cat="cosmeticos">💄 Cosméticos</span>
+              <span class="mp-cat-tag" data-cat="organicos">🌿 Orgánicos</span>
+              <span class="mp-cat-tag" data-cat="tech">📱 Tecnología</span>
+              <span class="mp-cat-tag" data-cat="hogar">🏠 Hogar</span>
+              <span class="mp-cat-tag" data-cat="ropa">👕 Ropa</span>
+            </div>
+            <div class="mp-products" style="margin-top:1.25rem;" id="mpBuyerGrid">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: INFO + STATS + HOW IT WORKS -->
+      <div class="mp-right">
+
+        <!-- Stats -->
+        <div class="mp-stats-row">
+          <div class="mp-stat">
+            <div class="mp-stat-val" style="color:#6366f1;">+200</div>
+            <div class="mp-stat-lbl">Proveedores en lista de espera</div>
+          </div>
+          <div class="mp-stat">
+            <div class="mp-stat-val" style="color:var(--primary);">5.000+</div>
+            <div class="mp-stat-lbl">Productos proyectados</div>
+          </div>
+          <div class="mp-stat">
+            <div class="mp-stat-val" style="color:var(--success);">0%</div>
+            <div class="mp-stat-lbl">Comisión acceso anticipado</div>
+          </div>
+        </div>
+
+        <!-- How it works -->
+        <div class="mp-how" id="mpHowBlock">
+          <p class="mp-how-title" id="mpHowTitle">¿Cómo funciona para proveedores?</p>
+          <div class="mp-how-steps" id="mpHowSteps">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+
+        <!-- Cart (appears when items added in comerciante view) -->
+        <div class="mp-cart" id="mpCart">
+          <p class="mp-cart-title">🛍️ Productos seleccionados para tu tienda</p>
+          <div class="mp-cart-items" id="mpCartItems"></div>
+          <div class="mp-cart-total">
+            <span class="mp-cart-total-lbl">Total estimado</span>
+            <span class="mp-cart-total-val" id="mpCartTotal">$0</span>
+          </div>
+          <button class="mp-cart-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            Importar a mi tienda Pymefy
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- REGISTER CTA STRIP -->
+    <div class="mp-register-strip scroll-reveal">
+      <div style="position:relative;">
+        <p class="mp-reg-eyebrow">Únete antes del lanzamiento</p>
+        <h3 class="mp-reg-title">¿Eres proveedor?<br>Registra tu empresa hoy.</h3>
+        <p class="mp-reg-text">Los primeros 100 proveedores registrados tendrán comisión 0% por 6 meses y prioridad en el listado. Tanto proveedores locales como de dropshipping son bienvenidos.</p>
+        <div class="mp-reg-types">
+          <span class="mp-reg-type"><span style="background:#6366f1;"></span>Proveedor Local</span>
+          <span class="mp-reg-type"><span style="background:#8b5cf6;"></span>Dropshipping Nacional</span>
+          <span class="mp-reg-type"><span style="background:#bb4d00;"></span>Dropshipping Internacional</span>
+          <span class="mp-reg-type"><span style="background:#059669;"></span>Productor Artesanal</span>
+        </div>
+      </div>
+      <div class="mp-reg-btns" style="position:relative;">
+        <a href="#signup" class="mp-btn-provider">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          Registrar mi empresa
+        </a>
+        <a href="#signup" class="mp-btn-buyer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          Soy comerciante, quiero acceso
+        </a>
+      </div>
+    </div>
+
+  </div>
 </section>
 
 <!-- FREE CTA -->
@@ -2505,7 +3336,331 @@
         });
     })();
 
-    // ── RIDER SCROLL-SCRUBBED ANIMATION ──────────────────────────────────────
+    // ── MARKETPLACE INTERACTIVO ───────────────────────────────────────────────
+    (function () {
+        var suppliers = [
+            {
+                name: 'Distribuidora Don Pedro',
+                products: [
+                    { emoji:'🥫', name:'Conservas Surtidas x12', price:'$18.500', cat:'abarrotes', priceRaw:18500, color:'#e8eafb' },
+                    { emoji:'🫙', name:'Aceite Oliva 1L', price:'$9.900', cat:'abarrotes', priceRaw:9900, color:'#fef9c3' },
+                    { emoji:'🧂', name:'Pack Especias Gourmet', price:'$7.200', cat:'abarrotes', priceRaw:7200, color:'#fce7f3' },
+                    { emoji:'🍫', name:'Chocolates Premium x20', price:'$14.800', cat:'abarrotes', priceRaw:14800, color:'#fef3c7' },
+                ]
+            },
+            {
+                name: 'BellezaDropCL',
+                products: [
+                    { emoji:'💄', name:'Labiales Matte x10', price:'$22.000', cat:'cosmeticos', priceRaw:22000, color:'#fce7f3' },
+                    { emoji:'🧴', name:'Sérum Vitamina C 30ml', price:'$19.500', cat:'cosmeticos', priceRaw:19500, color:'#e8eafb' },
+                    { emoji:'🪥', name:'Kit Cuidado Facial', price:'$34.900', cat:'cosmeticos', priceRaw:34900, color:'#d1fae5' },
+                    { emoji:'✨', name:'Glitter Biodegradable', price:'$8.900', cat:'cosmeticos', priceRaw:8900, color:'#fef9c3' },
+                ]
+            },
+            {
+                name: 'Orgánicos del Sur',
+                products: [
+                    { emoji:'🍃', name:'Miel de Ulmo 500g', price:'$12.400', cat:'organicos', priceRaw:12400, color:'#d1fae5' },
+                    { emoji:'🌾', name:'Quinoa Orgánica 1kg', price:'$8.600', cat:'organicos', priceRaw:8600, color:'#fef3c7' },
+                    { emoji:'🫐', name:'Mermelada Berries 250g', price:'$6.900', cat:'organicos', priceRaw:6900, color:'#e8eafb' },
+                    { emoji:'🧉', name:'Yerba Mate Premium', price:'$11.200', cat:'organicos', priceRaw:11200, color:'#fce7f3' },
+                ]
+            }
+        ];
+
+        var allProducts = [
+            { emoji:'🥫', name:'Conservas Surtidas x12', price:'$18.500', cat:'abarrotes', priceRaw:18500, color:'#e8eafb' },
+            { emoji:'🫙', name:'Aceite Oliva 1L', price:'$9.900', cat:'abarrotes', priceRaw:9900, color:'#fef9c3' },
+            { emoji:'💄', name:'Labiales Matte x10', price:'$22.000', cat:'cosmeticos', priceRaw:22000, color:'#fce7f3' },
+            { emoji:'🧴', name:'Sérum Vitamina C 30ml', price:'$19.500', cat:'cosmeticos', priceRaw:19500, color:'#e8eafb' },
+            { emoji:'🍃', name:'Miel de Ulmo 500g', price:'$12.400', cat:'organicos', priceRaw:12400, color:'#d1fae5' },
+            { emoji:'🌾', name:'Quinoa Orgánica 1kg', price:'$8.600', cat:'organicos', priceRaw:8600, color:'#fef3c7' },
+            { emoji:'📱', name:'Soporte Universal', price:'$4.900', cat:'tech', priceRaw:4900, color:'#e8eafb' },
+            { emoji:'🔌', name:'Cable USB-C Reforzado', price:'$3.800', cat:'tech', priceRaw:3800, color:'#fef9c3' },
+            { emoji:'🏠', name:'Set Organizadores 6pzs', price:'$16.200', cat:'hogar', priceRaw:16200, color:'#fce7f3' },
+            { emoji:'👕', name:'Poleras Básicas x5', price:'$28.000', cat:'ropa', priceRaw:28000, color:'#d1fae5' },
+        ];
+
+        var proveedorSteps = [
+            { n:1, title:'Regístrate gratis', text:'Crea tu perfil de proveedor con tu RUT, giro y catálogo. Toma menos de 10 minutos.' },
+            { n:2, title:'Sube tu catálogo', text:'Agrega tus productos con fotos, precios, stock y condiciones de entrega.' },
+            { n:3, title:'Llega a +5.000 pymes', text:'Tu catálogo queda visible para todos los comerciantes que usan Pymefy en Chile.' },
+            { n:4, title:'Gestiona pedidos desde el panel', text:'Recibe y despacha pedidos directamente desde tu dashboard de proveedor.' },
+        ];
+
+        var comercianteSteps = [
+            { n:1, title:'Explora el marketplace', text:'Navega por cientos de proveedores locales y de dropshipping desde tu panel.' },
+            { n:2, title:'Selecciona productos', text:'Agrega productos a tu tienda con un click, sin necesidad de tener stock.' },
+            { n:3, title:'Vende y el proveedor despacha', text:'Con dropshipping, el proveedor envía directo a tu cliente. Tú solo vendes.' },
+            { n:4, title:'Controla todo desde Pymefy', text:'Pedidos, pagos y seguimiento integrados en tu mismo dashboard.' },
+        ];
+
+        var cartItems = [];
+
+        function fmt(n) { return '$' + n.toLocaleString('es-CL'); }
+
+        function buildAddBtn(inCart, mode) {
+            var svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:10px;height:10px;">';
+            if (inCart) {
+                return svg + '<path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg> Agregado';
+            }
+            return svg + '<path d="M12 5v14"/><path d="M5 12h14"/></svg> ' + (mode === 'buyer' ? 'Agregar a tienda' : 'Ver detalle');
+        }
+
+        function buildProductCard(p, mode) {
+            var inCart = cartItems.some(function(c){ return c.name === p.name; });
+            var card = document.createElement('div');
+            card.className = 'mp-product-card' + (inCart ? ' added' : '');
+            card.innerHTML =
+                '<div class="mp-product-img" style="background:' + (p.color || '#f0ede8') + '">' + p.emoji + '</div>' +
+                '<div class="mp-product-info">' +
+                  '<p class="mp-product-name">' + p.name + '</p>' +
+                  '<p class="mp-product-price">' + p.price + '</p>' +
+                '</div>' +
+                '<button class="mp-product-add" type="button">' + buildAddBtn(inCart, mode) + '</button>';
+            if (mode === 'buyer') {
+                card.querySelector('.mp-product-add').addEventListener('click', function(){
+                    toggleCart(p, card);
+                });
+            }
+            return card;
+        }
+
+        function renderSupplierProducts(idx) {
+            var grid = document.getElementById('mpProductGrid');
+            var label = document.getElementById('mpSupplierLabel');
+            if (!grid) return;
+            grid.innerHTML = '';
+            label.textContent = 'Productos — ' + suppliers[idx].name;
+            suppliers[idx].products.forEach(function(p){ grid.appendChild(buildProductCard(p, 'supplier')); });
+        }
+
+        function renderBuyerProducts(cat) {
+            var grid = document.getElementById('mpBuyerGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            var filtered = cat === 'all' ? allProducts : allProducts.filter(function(p){ return p.cat === cat; });
+            filtered.forEach(function(p){ grid.appendChild(buildProductCard(p, 'buyer')); });
+        }
+
+        function renderSteps(steps) {
+            var el = document.getElementById('mpHowSteps');
+            if (!el) return;
+            el.innerHTML = '';
+            steps.forEach(function(s){
+                var div = document.createElement('div');
+                div.className = 'mp-how-step';
+                div.innerHTML = '<div class="mp-step-num">' + s.n + '</div><div><p class="mp-step-title">' + s.title + '</p><p class="mp-step-text">' + s.text + '</p></div>';
+                el.appendChild(div);
+            });
+        }
+
+        function toggleCart(p, card) {
+            var idx = cartItems.findIndex(function(c){ return c.name === p.name; });
+            if (idx > -1) {
+                cartItems.splice(idx, 1);
+                card.classList.remove('added');
+                card.querySelector('.mp-product-add').innerHTML = buildAddBtn(false, 'buyer');
+            } else {
+                cartItems.push(p);
+                card.classList.add('added');
+                card.querySelector('.mp-product-add').innerHTML = buildAddBtn(true, 'buyer');
+            }
+            updateCart();
+        }
+
+        function updateCart() {
+            var cartEl = document.getElementById('mpCart');
+            var itemsEl = document.getElementById('mpCartItems');
+            var totalEl = document.getElementById('mpCartTotal');
+            if (!cartEl || !itemsEl || !totalEl) return;
+            if (cartItems.length === 0) { cartEl.classList.remove('visible'); return; }
+            cartEl.classList.add('visible');
+            itemsEl.innerHTML = '';
+            var total = 0;
+            var colors = ['#6366f1','#25d366','#bb4d00','#d97706','#8b5cf6'];
+            cartItems.forEach(function(p, i){
+                var div = document.createElement('div');
+                div.className = 'mp-cart-item';
+                div.innerHTML = '<span class="mp-cart-item-dot" style="background:' + colors[i % colors.length] + '"></span>' + p.emoji + ' ' + p.name + '<span style="margin-left:auto;font-weight:600;color:#fff;">' + p.price + '</span>';
+                itemsEl.appendChild(div);
+                total += p.priceRaw || 0;
+            });
+            totalEl.textContent = fmt(total);
+        }
+
+        // Init
+        renderSupplierProducts(0);
+        renderBuyerProducts('all');
+        renderSteps(proveedorSteps);
+
+        // Supplier row click
+        document.querySelectorAll('[data-supplier]').forEach(function(row){
+            row.addEventListener('click', function(){
+                document.querySelectorAll('[data-supplier]').forEach(function(r){ r.classList.remove('selected'); });
+                row.classList.add('selected');
+                renderSupplierProducts(parseInt(row.dataset.supplier));
+            });
+        });
+
+        // Category filter
+        var catFilter = document.getElementById('mpCatFilter');
+        if (catFilter) {
+            catFilter.addEventListener('click', function(e){
+                var tag = e.target.closest('.mp-cat-tag');
+                if (!tag) return;
+                document.querySelectorAll('.mp-cat-tag').forEach(function(t){ t.classList.remove('active'); });
+                tag.classList.add('active');
+                renderBuyerProducts(tag.dataset.cat);
+            });
+        }
+
+        // Tab switcher
+        document.querySelectorAll('.mp-tab').forEach(function(btn){
+            btn.addEventListener('click', function(){
+                document.querySelectorAll('.mp-tab').forEach(function(b){ b.classList.remove('active'); });
+                btn.classList.add('active');
+                var tab = btn.dataset.tab;
+                var pEl = document.getElementById('mpPanelProveedor');
+                var cEl = document.getElementById('mpPanelComerciante');
+                if (pEl) pEl.style.display = tab === 'proveedor' ? '' : 'none';
+                if (cEl) cEl.style.display = tab === 'comerciante' ? '' : 'none';
+                var howTitle = document.getElementById('mpHowTitle');
+                if (howTitle) howTitle.textContent = tab === 'proveedor' ? '¿Cómo funciona para proveedores?' : '¿Cómo funciona para comerciantes?';
+                renderSteps(tab === 'proveedor' ? proveedorSteps : comercianteSteps);
+                updateCart();
+            });
+        });
+    })();
+
+    // ── AGENTE IA – WHATSAPP INTERACTIVE MOCKUP ──────────────────────────────
+    (function () {
+        const scenarios = [
+            {
+                messages: [
+                    { out: true,  text: 'Hola Agente, ¿quién tiene hora mañana a las 10?' },
+                    { out: false, text: '📅 Mañana a las 10:00 AM tiene hora:\n\n👤 *María González*\nServicio: Corte + Tinte\nTeléfono: +56 9 8765 4321\n\n¿Quieres que le envíe un recordatorio?' },
+                    { out: true,  text: 'Sí, envíale el recordatorio' },
+                    { out: false, text: '✅ Recordatorio enviado a María González.\n\n_"Hola María 👋 Te recordamos tu hora mañana a las 10:00 AM. ¡Te esperamos!"_' },
+                ]
+            },
+            {
+                messages: [
+                    { out: true,  text: 'Envía mensaje a todos los clientes del mes pasado' },
+                    { out: false, text: '📨 Detecté *24 clientes* del mes anterior.\n\n¿Qué mensaje quieres enviarles?' },
+                    { out: true,  text: 'Diles que tenemos 20% de descuento esta semana' },
+                    { out: false, text: '🎉 ¡Listo! Enviando a 24 clientes:\n\n_"Hola! 🌟 Esta semana tienes 20% de descuento en todos nuestros servicios. ¡No te lo pierdas! Reserva en pymefy.cl"_\n\n✅ Campaña enviada con éxito.' },
+                ]
+            },
+            {
+                messages: [
+                    { out: true,  text: '¿Cuánto vendí hoy?' },
+                    { out: false, text: '📊 *Resumen de hoy:*\n\n💰 Ventas totales: $148.500\n👥 Clientes atendidos: 6\n⭐ Servicio más vendido: Corte\n\n📈 +23% vs. el mismo día la semana pasada' },
+                    { out: true,  text: '¿Quién tiene deuda pendiente?' },
+                    { out: false, text: '⚠️ *Clientes con pago pendiente:*\n\n• Carlos Muñoz — $25.000\n• Ana Pérez — $18.500\n\n¿Quieres que les envíe un recordatorio de cobro?' },
+                ]
+            },
+            {
+                messages: [
+                    { out: true,  text: 'Agrega un servicio nuevo: Keratina $45.000' },
+                    { out: false, text: '✅ Servicio agregado:\n\n💇 *Keratina*\nPrecio: $45.000\nDuración estimada: 2h\n\n¿Quieres que lo muestre en tu sitio web también?' },
+                    { out: true,  text: 'Sí, publícalo en el sitio' },
+                    { out: false, text: '🚀 ¡Publicado! El servicio *Keratina $45.000* ya está visible en tu sitio web pymefy.cl\n\n¿Necesitas algo más?' },
+                ]
+            }
+        ];
+
+        let activeScenario = 0;
+        let animTimeout = null;
+
+        const chatBody = document.getElementById('waChatBody');
+        const feats = document.querySelectorAll('.agent-feat');
+
+        function getTime() {
+            const now = new Date();
+            return now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0');
+        }
+
+        function clearChat() {
+            chatBody.innerHTML = '<div class="wa-date-chip">Hoy</div>';
+        }
+
+        function addBubble(msg, delay) {
+            return new Promise(function(resolve) {
+                setTimeout(function() {
+                    // Show typing indicator for incoming
+                    if (!msg.out) {
+                        const typing = document.createElement('div');
+                        typing.className = 'wa-typing show';
+                        typing.innerHTML = '<span></span><span></span><span></span>';
+                        chatBody.appendChild(typing);
+                        chatBody.scrollTop = chatBody.scrollHeight;
+
+                        setTimeout(function() {
+                            typing.remove();
+                            const bubble = document.createElement('div');
+                            bubble.className = 'wa-bubble in';
+                            bubble.style.animation = 'bubble-in 0.3s ease both';
+                            bubble.innerHTML = msg.text.replace(/\n/g, '<br>').replace(/\*(.*?)\*/g, '<strong>$1</strong>').replace(/_(.*?)_/g, '<em>$1</em>');
+                            const time = document.createElement('div');
+                            time.className = 'wa-bubble-time';
+                            time.textContent = getTime();
+                            bubble.appendChild(time);
+                            chatBody.appendChild(bubble);
+                            chatBody.scrollTop = chatBody.scrollHeight;
+                            resolve();
+                        }, 1000);
+                    } else {
+                        const bubble = document.createElement('div');
+                        bubble.className = 'wa-bubble out';
+                        bubble.style.animation = 'bubble-in 0.3s ease both';
+                        bubble.innerHTML = msg.text.replace(/\n/g, '<br>');
+                        const time = document.createElement('div');
+                        time.className = 'wa-bubble-time';
+                        time.textContent = getTime();
+                        bubble.appendChild(time);
+                        chatBody.appendChild(bubble);
+                        chatBody.scrollTop = chatBody.scrollHeight;
+                        resolve();
+                    }
+                }, delay);
+            });
+        }
+
+        async function playScenario(idx) {
+            if (animTimeout) clearTimeout(animTimeout);
+            clearChat();
+            const msgs = scenarios[idx].messages;
+            let delay = 200;
+            for (let i = 0; i < msgs.length; i++) {
+                await addBubble(msgs[i], i === 0 ? 300 : 600);
+            }
+        }
+
+        feats.forEach(function(feat, i) {
+            feat.addEventListener('click', function() {
+                feats.forEach(function(f) { f.classList.remove('active'); });
+                feat.classList.add('active');
+                activeScenario = parseInt(feat.dataset.scenario);
+                playScenario(activeScenario);
+            });
+        });
+
+        // Auto-cycle scenarios
+        function autoCycle() {
+            const next = (activeScenario + 1) % scenarios.length;
+            feats.forEach(function(f) { f.classList.remove('active'); });
+            feats[next].classList.add('active');
+            activeScenario = next;
+            playScenario(next);
+            animTimeout = setTimeout(autoCycle, 7000);
+        }
+
+        // Start
+        playScenario(0);
+        animTimeout = setTimeout(autoCycle, 7000);
+    })();
+
     // Compatible con todos los navegadores modernos porque usa JS + scroll nativo.
     // Frame 1: cuando el componente empieza a entrar al viewport.
     // Frame 154: cuando el componente ya salió completamente del viewport.
