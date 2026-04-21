@@ -6,7 +6,7 @@
     <meta name="description" content="Pymefy - La plataforma para digitalizar, formalizar y hacer crecer tu negocio chileno.">
     <meta name="theme-color" content="#bb4d00">
     <title>Pymefy | De emprendedor, a digital</title>
-    
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -120,13 +120,13 @@
         
         /* ── NAVBAR ── */
         .navbar {
-            position: fixed; top: 1rem; left: 50%; transform: translateX(-50%);
+            position: fixed; top: 0.7rem; left: 50%; transform: translateX(-50%);
             z-index: 1000; width: min(1200px, calc(100% - 1rem));
         }
         .navbar-inner {
             display: grid; grid-template-columns: 48px 1fr auto;
-            align-items: center; gap: 1rem; padding: 0.75rem 1rem;
-            background: rgba(247,241,228,0.92); backdrop-filter: blur(14px);
+            align-items: center; gap: 1rem; padding: 0.25rem 0.4rem;
+            background: rgba(247,241,228,0.52); backdrop-filter: blur(14px);
             border: 1px solid rgba(0,0,0,0.08); border-radius: 9999px;
             box-shadow: 0 8px 24px rgba(66,50,32,0.08);
         }
@@ -486,7 +486,7 @@
 
         /* ── TRUST STRIP ── */
         .trust-strip { padding: 0 1.5rem; }
-        .trust-strip-inner { max-width: 1000px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2rem; padding: 1.25rem 1.5rem; border-radius: 2rem; border: 1px solid rgba(0,0,0,0.08); background: rgba(255,255,255,0.5); }
+        .trust-strip-inner { margin-top:50px;max-width: 1000px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2rem; padding: 1.25rem 1.5rem; border-radius: 2rem; border: 1px solid rgba(0,0,0,0.08); background: rgba(255,255,255,0.5); }
         .trust-item { display: flex; align-items: center; gap: 0.625rem; }
         .trust-icon { width: 2.75rem; height: 2.75rem; border-radius: 0.75rem; flex-shrink: 0; background: linear-gradient(135deg, rgba(187,77,0,0.08), rgba(232,114,10,0.08)); display: flex; align-items: center; justify-content: center; color: var(--primary); }
         .trust-icon svg { width: 20px; height: 20px; }
@@ -523,6 +523,730 @@
         .not-divider { display: flex; align-items: center; gap: 1.25rem; margin: 3rem 0 2rem; }
         .not-badge { display: inline-flex; align-items: center; padding: 0.4rem 1.125rem; background: var(--text); color: #fff; border-radius: 9999px; font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; white-space: nowrap; }
         .not-line { flex: 1; height: 1px; background: linear-gradient(to right, rgba(0,0,0,0.08), transparent); }
+        /* ═══════════════════════════════════════════════════
+   SLIDE 4 — PYMEFY STUDIO & CONSTRUCTOR (REDESIGN PRO)
+═══════════════════════════════════════════════════ */
+.slide-4 {
+    background: #07070f;
+    position: relative;
+    overflow: hidden;
+}
+
+.studio-bg-effects {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.studio-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(4rem);
+}
+
+.studio-orb-1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(109,40,217,0.18), transparent 65%);
+    top: -180px;
+    right: -120px;
+}
+
+.studio-orb-2 {
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(6,182,212,0.1), transparent 65%);
+    bottom: -100px;
+    left: -100px;
+}
+
+/* Extra orb for richness */
+.studio-orb-3 {
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(236,72,153,0.08), transparent 65%);
+    top: 50%;
+    left: 38%;
+    transform: translateY(-50%);
+    filter: blur(3rem);
+}
+
+.studio-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(139,92,246,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139,92,246,0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+}
+
+/* Noise texture overlay */
+.studio-bg-effects::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.studio-container {
+    position: relative;
+    z-index: 2;
+    min-height: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 6.5rem;
+    padding-bottom: 4rem;
+    gap: 0;
+}
+
+/* ── NEW LAYOUT: left column (header + stats) + right column (2 cards) ── */
+.studio-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    flex: 1;
+    min-height: 0;
+}
+
+@media(min-width: 1024px) {
+    .studio-layout {
+        grid-template-columns: 380px 1fr;
+        gap: 3rem;
+        align-items: start;
+    }
+}
+
+/* Left: sticky info column */
+.studio-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+@media(min-width: 1024px) {
+    .studio-info-col {
+        position: sticky;
+        top: 6rem;
+    }
+}
+
+.studio-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.875rem;
+    border-radius: 9999px;
+    background: rgba(139,92,246,0.12);
+    border: 1px solid rgba(139,92,246,0.3);
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: #c4b5fd;
+    width: fit-content;
+}
+
+.studio-title {
+    font-family: var(--font-title);
+    font-weight: 700;
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    letter-spacing: -0.055em;
+    line-height: 1.05;
+    color: #fff;
+    margin-top: 1rem;
+}
+
+.studio-gradient-text {
+    background: linear-gradient(120deg, #a78bfa 0%, #38bdf8 50%, #a855f7 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 4s linear infinite;
+}
+
+.studio-subtitle {
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.48);
+    margin-top: 0.875rem;
+    max-width: 340px;
+}
+
+/* Pill list of capabilities */
+.studio-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+}
+
+.studio-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 9999px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.09);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.6);
+}
+
+.studio-pill-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Stats block */
+.studio-kpi-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 1.25rem;
+    overflow: hidden;
+}
+
+.studio-kpi {
+    padding: 1.125rem 1rem;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.studio-kpi:last-child {
+    border-right: none;
+}
+
+.stat-num {
+    font-family: var(--font-title);
+    font-size: 1.625rem;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    background: linear-gradient(120deg, #a78bfa, #38bdf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+}
+
+.studio-kpi .stat-label {
+    font-size: 0.625rem;
+    color: rgba(255,255,255,0.38);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0;
+}
+
+/* CTA area in left col */
+.studio-left-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.studio-left-cta-label {
+    font-size: 0.6875rem;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+}
+
+.studio-cta-btns {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* Right: cards column */
+.studio-cards-col {
+    margin-left:8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Studio Card (horizontal layout inside) */
+.studio-card {
+    border-radius: 1.75rem;
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 1.5rem;
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.studio-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+
+.studio-card-purple {
+    background: rgba(109,40,217,0.07);
+}
+
+.studio-card-purple::before {
+    background: radial-gradient(ellipse at top right, rgba(139,92,246,0.12), transparent 60%);
+}
+
+.studio-card-cyan {
+    background: rgba(6,182,212,0.06);
+}
+
+.studio-card-cyan::before {
+    background: radial-gradient(ellipse at bottom left, rgba(6,182,212,0.1), transparent 60%);
+}
+
+.studio-card:hover {
+    border-color: rgba(255,255,255,0.13);
+    transform: translateY(-3px);
+}
+
+.studio-card-purple:hover {
+    box-shadow: 0 24px 60px rgba(109,40,217,0.2);
+}
+
+.studio-card-cyan:hover {
+    box-shadow: 0 24px 60px rgba(6,182,212,0.15);
+}
+
+.studio-card:hover::before {
+    opacity: 1;
+}
+
+/* Card top row */
+.studio-card-top {
+    display: flex;
+    align-items: flex-start;
+    margin-top:1.25rem;
+    gap: 1rem;
+}
+
+.studio-card-body {
+    display: grid;
+    gap: 1rem;
+}
+
+@media(min-width: 768px) {
+    .studio-card-body {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+    }
+}
+
+.panel-icon {
+    font-size: 1.5rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.875rem;
+    flex-shrink: 0;
+}
+
+.studio-card-purple .panel-icon {
+    background: rgba(139,92,246,0.18);
+    border: 1px solid rgba(139,92,246,0.25);
+}
+
+.studio-card-cyan .panel-icon {
+    background: rgba(6,182,212,0.15);
+    border: 1px solid rgba(6,182,212,0.22);
+}
+
+.panel-title-area {
+    flex: 1;
+    min-width: 0;
+}
+
+.panel-title {
+    font-family: var(--font-title);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    letter-spacing: -0.03em;
+}
+
+.panel-subtitle {
+    font-size: 0.6875rem;
+    color: rgba(255,255,255,0.4);
+    margin: 0.2rem 0 0;
+}
+
+.panel-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.5625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    flex-shrink: 0;
+}
+
+.badge-purple {
+    background: rgba(139,92,246,0.2);
+    border: 1px solid rgba(139,92,246,0.3);
+    color: #c4b5fd;
+}
+
+.badge-cyan {
+    background: rgba(6,182,212,0.15);
+    border: 1px solid rgba(6,182,212,0.25);
+    color: #67e8f9;
+}
+
+/* Image pane */
+.studio-img-pane {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: rgba(0,0,0,0.4);
+    aspect-ratio: 16/10;
+}
+
+.studio-card-purple .studio-img-pane {
+    border: 1px solid rgba(139,92,246,0.18);
+}
+
+.studio-card-cyan .studio-img-pane {
+    border: 1px solid rgba(6,182,212,0.15);
+}
+
+.studio-img-pane img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+}
+
+.studio-img-pane-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 55%);
+}
+
+.img-chip {
+    position: absolute;
+    top: 0.625rem;
+    right: 0.625rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.65rem;
+    border-radius: 9999px;
+    font-size: 0.5625rem;
+    font-weight: 700;
+    backdrop-filter: blur(10px);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.chip-purple {
+    background: rgba(109,40,217,0.82);
+    border: 1px solid rgba(167,139,250,0.3);
+    color: #fff;
+}
+
+.chip-cyan {
+    background: rgba(8,145,178,0.82);
+    border: 1px solid rgba(103,232,249,0.3);
+    color: #fff;
+}
+
+.img-chip-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: status-pulse 1.8s ease-in-out infinite;
+}
+
+/* Feature list */
+.feat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.feat-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    padding: 0.625rem 0.75rem;
+    border-radius: 0.75rem;
+    transition: background 0.2s ease;
+}
+
+.feat-row:hover {
+    background: rgba(255,255,255,0.04);
+}
+
+.feat-check {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+    font-size: 0.5rem;
+}
+
+.check-purple {
+    background: rgba(139,92,246,0.2);
+    border: 1px solid rgba(139,92,246,0.35);
+    color: #a78bfa;
+}
+
+.check-cyan {
+    background: rgba(6,182,212,0.15);
+    border: 1px solid rgba(6,182,212,0.3);
+    color: #67e8f9;
+}
+
+.feat-text-wrap {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.feat-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.feat-desc {
+    font-size: 0.625rem;
+    color: rgba(255,255,255,0.38);
+    margin: 0.125rem 0 0;
+    line-height: 1.5;
+}
+
+/* Workflow strip */
+.workflow-strip {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 0.875rem;
+}
+
+.ws-step {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    flex: 1;
+}
+
+.ws-num {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    font-size: 0.625rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ws-num-purple {
+    background: rgba(139,92,246,0.2);
+    border: 1px solid rgba(139,92,246,0.3);
+    color: #c4b5fd;
+}
+
+.ws-num-cyan {
+    background: rgba(6,182,212,0.18);
+    border: 1px solid rgba(6,182,212,0.28);
+    color: #67e8f9;
+}
+
+.ws-num-green {
+    background: rgba(37,211,102,0.18);
+    border: 1px solid rgba(37,211,102,0.3);
+    color: #4ade80;
+}
+
+.ws-text {
+    font-size: 0.5625rem;
+    color: rgba(255,255,255,0.5);
+    margin: 0;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+.ws-arrow {
+    color: rgba(255,255,255,0.2);
+    flex-shrink: 0;
+}
+
+/* Card bottom row */
+.studio-card-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.card-bottom-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.meta-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.meta-text {
+    font-size: 0.625rem;
+    color: rgba(255,255,255,0.35);
+    font-weight: 500;
+}
+
+/* Buttons */
+.btn-studio {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.75rem;
+    box-shadow: 0 6px 20px rgba(124,58,237,0.35);
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+
+.btn-studio:hover {
+    background: linear-gradient(135deg, #6d28d9, #9333ea);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(124,58,237,0.45);
+}
+
+.btn-studio svg { width: 14px; height: 14px; }
+
+.btn-constructor {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #0891b2, #06b6d4);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.75rem;
+    box-shadow: 0 6px 20px rgba(8,145,178,0.3);
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+
+.btn-constructor:hover {
+    background: linear-gradient(135deg, #0e7490, #0891b2);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(8,145,178,0.4);
+}
+
+.btn-constructor svg { width: 14px; height: 14px; }
+
+/* Ghost btn for left col */
+.btn-ghost-studio {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 9999px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+    font-size: 0.75rem;
+    transition: all 0.25s ease;
+}
+
+.btn-ghost-studio:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+}
+
+/* Studio Nav */
+.studio-nav .slider-dot {
+    background: rgba(255,255,255,0.18);
+}
+
+.studio-nav .slider-dot.active {
+    background: rgba(255,255,255,0.85);
+}
+
+.studio-nav .slider-arrow {
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.55);
+}
+
+.studio-nav .slider-arrow:hover {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+}
+
+/* Unused old classes kept as no-ops to avoid breaking anything */
+.studio-header { display: none; }
+.studio-grid { display: none; }
+.studio-panel { display: none; }
+.studio-stats { display: none; }
+.studio-stat { display: none; }
+.studio-stat-divider { display: none; }
+.studio-features { display: none; }
+.studio-feature { display: none; }
+.constructor-features { display: none; }
+.constructor-feature { display: none; }
+.constructor-workflow { display: none; }
+.studio-ui-container { display: none; }
+.constructor-ui-container { display: none; }
+.studio-cta { display: none; }
+.feat-icon { display: none; }
 
         /* ── TEMPLATES ── */
         .templates-wrap { padding: 5rem 1.5rem; }
@@ -762,7 +1486,7 @@
 </header>
 
 <!-- ═══════════════════════════════════════════════
-     HERO SLIDER — 3 slides
+     HERO SLIDER — 4 slides
 ═══════════════════════════════════════════════ -->
 <div class="hero-slider" id="heroSlider">
 
@@ -941,6 +1665,209 @@
             <button class="slider-arrow" id="nextBtn3" aria-label="Siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="m9 18 6-6-6-6"/></svg></button>
         </div>
     </section>
+    <!-- ─── SLIDE 4 — PYMEFY STUDIO & CONSTRUCTOR (REDESIGN PRO) ─── -->
+<section class="hero-slide slide-4" id="studio" data-slide="3">
+    <div class="studio-bg-effects">
+        <div class="studio-orb studio-orb-1"></div>
+        <div class="studio-orb studio-orb-2"></div>
+        <div class="studio-orb studio-orb-3"></div>
+        <div class="studio-grid-lines"></div>
+    </div>
+
+    <div class="container studio-container">
+        <div class="studio-layout">
+
+            <!-- ── LEFT COLUMN: Info + KPIs + CTAs ── -->
+            <div class="studio-info-col">
+
+                <div class="studio-eyebrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    Herramientas Creativas
+                </div>
+
+                <div>
+                    <h2 class="studio-title">
+                        Crea y lanza<br>con
+                        <span class="studio-gradient-text">Pymefy Studio</span>
+                    </h2>
+                    <p class="studio-subtitle">Editor con IA integrada para diseñar logos, contenido de marca y sitios web completos — todo desde un solo lugar.</p>
+                </div>
+
+                <!-- KPIs -->
+                <div class="studio-kpi-row">
+                    <div class="studio-kpi">
+                        <span class="stat-num">50+</span>
+                        <span class="stat-label">Plantillas</span>
+                    </div>
+                    <div class="studio-kpi">
+                        <span class="stat-num">IA</span>
+                        <span class="stat-label">Generación auto</span>
+                    </div>
+                    <div class="studio-kpi">
+                        <span class="stat-num">1 clic</span>
+                        <span class="stat-label">Para publicar</span>
+                    </div>
+                </div>
+
+                <!-- CTAs -->
+                <div class="studio-left-cta">
+                    <span class="studio-left-cta-label">Empieza hoy — gratis</span>
+                    <div class="studio-cta-btns">
+                        <a href="#signup" class="btn-studio">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                            Probar Studio
+                        </a>
+                        <a href="#signup" class="btn-constructor">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                            Probar Constructor
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ── RIGHT COLUMN: Two product cards ── -->
+            <div class="studio-cards-col">
+
+                <!-- Card 1: Pymefy Studio -->
+                <div class="">
+                    <div class="studio-card-top">
+                        
+                        <div class="panel-title-area">
+                            
+                            <p class="panel-subtitle">Diseño &amp; branding con IA</p>
+                        </div>
+                        
+                    </div>
+
+                    <div class="studio-card-body">
+                        <div class="studio-img-pane">
+                            <img src="./pymefystudio.png" alt="Pymefy Studio" loading="lazy">
+                            <div class="studio-img-pane-overlay"></div>
+                            <div class="img-chip chip-purple">
+                                <span class="img-chip-dot"></span>
+                                ✨ Generación IA
+                            </div>
+                        </div>
+
+                        <div class="feat-list">
+                            <div class="feat-row">
+                                <span class="feat-check check-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="9" height="9"><path d="m5 12 5 5 9-9"/></svg></span>
+                                <div class="feat-text-wrap">
+                                    <p class="feat-title">Logos con IA</p>
+                                    <p class="feat-desc">Profesionales en segundos</p>
+                                </div>
+                            </div>
+                            <div class="feat-row">
+                                <span class="feat-check check-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="9" height="9"><path d="m5 12 5 5 9-9"/></svg></span>
+                                <div class="feat-text-wrap">
+                                    <p class="feat-title">Publicaciones &amp; ads</p>
+                                    <p class="feat-desc">Contenido de marca automático</p>
+                                </div>
+                            </div>
+                            <div class="feat-row">
+                                <span class="feat-check check-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="9" height="9"><path d="m5 12 5 5 9-9"/></svg></span>
+                                <div class="feat-text-wrap">
+                                    <p class="feat-title">Mockups de producto</p>
+                                    <p class="feat-desc">Presentaciones únicas y editables</p>
+                                </div>
+                            </div>
+                            <div class="feat-row">
+                                <span class="feat-check check-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="9" height="9"><path d="m5 12 5 5 9-9"/></svg></span>
+                                <div class="feat-text-wrap">
+                                    <p class="feat-title">50+ plantillas listas</p>
+                                    <p class="feat-desc">Personalizables en minutos</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Card 2: Pymefy Constructor -->
+                <div class=" ">
+                    <div class="studio-card-top">
+                        
+                        <div class="">
+                            
+                            <p class="panel-subtitle">Edita tu sitio con IA</p>
+                        </div>
+                       
+                    </div>
+
+                    <div class="studio-card-body">
+                        <div class="studio-img-pane">
+                            <img src="./pymefyconstructor.png" alt="Pymefy Constructor" loading="lazy">
+                            <div class="studio-img-pane-overlay"></div>
+                            <div class="img-chip chip-cyan">
+                                <span class="img-chip-dot"></span>
+                                🤖 IA editando...
+                            </div>
+                        </div>
+
+                        <div style="display:flex;flex-direction:column;gap:0.75rem;">
+                            <div class="workflow-strip">
+                                <div class="ws-step">
+                                    <span class="ws-num ws-num-cyan">1</span>
+                                    <p class="ws-text">Describe lo que necesitas</p>
+                                </div>
+                                <span class="ws-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                                <div class="ws-step">
+                                    <span class="ws-num ws-num-cyan">2</span>
+                                    <p class="ws-text">IA genera opciones</p>
+                                </div>
+                                <span class="ws-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                                <div class="ws-step">
+                                    <span class="ws-num ws-num-green">✓</span>
+                                    <p class="ws-text">Publicas en 1 clic</p>
+                                </div>
+                            </div>
+
+                            <div class="feat-list">
+                                <div class="feat-row">
+                                    <span class="feat-check check-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="9" height="9"><path d="m5 12 5 5 9-9"/></svg></span>
+                                    <div class="feat-text-wrap">
+                                        <p class="feat-title">Editor visual sin código</p>
+                                        <p class="feat-desc">Arrastra, suelta y personaliza</p>
+                                    </div>
+                                </div>
+                                <div class="feat-row">
+                                    <span class="feat-check check-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="9" height="9"><path d="m5 12 5 5 9-9"/></svg></span>
+                                    <div class="feat-text-wrap">
+                                        <p class="feat-title">Contenido optimizado para conversión</p>
+                                        <p class="feat-desc">IA escribe y mejora textos</p>
+                                    </div>
+                                </div>
+                                <div class="feat-row">
+                                    <span class="feat-check check-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="9" height="9"><path d="m5 12 5 5 9-9"/></svg></span>
+                                    <div class="feat-text-wrap">
+                                        <p class="feat-title">SEO automático incluido</p>
+                                        <p class="feat-desc">Aparece en Google desde el día 1</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+            </div><!-- /studio-cards-col -->
+
+        </div><!-- /studio-layout -->
+    </div>
+
+    <div class="slider-nav studio-nav" id="sliderNav4">
+        <button class="slider-arrow" id="prevBtn4" aria-label="Anterior">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <div class="slider-dots" id="sliderDots4"></div>
+        <button class="slider-arrow" id="nextBtn4" aria-label="Siguiente">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+    </div>
+</section>
+
 
 </div><!-- /hero-slider -->
 
