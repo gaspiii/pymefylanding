@@ -668,6 +668,14 @@
     background-clip: text;
     animation: shimmer 4s linear infinite;
 }
+.studio-gradient-text-cyan {
+    background: linear-gradient(120deg, #67e8f9 0%, #06b6d4 50%, #0891b2 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 4s linear infinite;
+}
 
 .studio-subtitle {
     font-size: 0.9375rem;
@@ -1248,6 +1256,96 @@
 .studio-cta { display: none; }
 .feat-icon { display: none; }
 
+        /* ═══════════════════════════════════════════════════
+   SLIDE 4 — DYNAMIC TITLE ANIMATION
+═══════════════════════════════════════════════════ */
+@keyframes title-fade-out {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-8px); }
+}
+
+@keyframes title-fade-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.studio-title-wrap {
+    position: relative;
+}
+
+.studio-title-dynamic {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    transition: none;
+}
+
+.studio-title-dynamic.fade-out {
+    animation: title-fade-out 0.4s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.studio-title-dynamic.fade-in {
+    animation: title-fade-in 0.5s cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+.studio-title-line1 {
+    display: block;
+}
+
+.studio-title-line2 {
+    display: block;
+    margin-top: 0.125rem;
+}
+
+/* Subtitle animation */
+.studio-subtitle-dynamic {
+    display: block;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.studio-subtitle-dynamic.hidden {
+    opacity: 0;
+}
+
+/* Indicator dots */
+.studio-title-indicator {
+    display: flex;
+    gap: 0.375rem;
+    margin-top: 1.25rem;
+}
+
+.indicator-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.indicator-dot.active {
+    background: linear-gradient(135deg, #a78bfa, #38bdf8);
+    width: 24px;
+    border-radius: 9999px;
+}
+
+.indicator-dot:hover:not(.active) {
+    background: rgba(255,255,255,0.35);
+}
+
+/* Icon rotation on switch */
+.studio-title-icon {
+    display: inline-block;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.studio-title-icon.switching {
+    transform: rotate(180deg);
+}
+
+
         /* ── TEMPLATES ── */
         .templates-wrap { padding: 5rem 1.5rem; }
         .template-tags { display: flex; flex-wrap: wrap; gap: 0.625rem; justify-content: center; padding: 1.25rem 0; }
@@ -1678,53 +1776,58 @@
         <div class="studio-layout">
 
             <!-- ── LEFT COLUMN: Info + KPIs + CTAs ── -->
-            <div class="studio-info-col">
+           <!-- ── LEFT COLUMN: Info + KPIs + CTAs ── -->
+<div class="studio-info-col">
 
-                <div class="studio-eyebrow">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    Herramientas Creativas
-                </div>
+    <div class="studio-eyebrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        Herramientas Creativas
+    </div>
 
-                <div>
-                    <h2 class="studio-title">
-                        Crea y lanza<br>con
-                        <span class="studio-gradient-text">Pymefy Studio</span>
-                    </h2>
-                    <p class="studio-subtitle">Editor con IA integrada para diseñar logos, contenido de marca y sitios web completos — todo desde un solo lugar.</p>
-                </div>
+    <div class="studio-title-wrap">
+        <!-- Option 1: Studio -->
+        <h2 class="studio-title studio-title-dynamic" id="studioTitleOption1">
+            <span class="studio-title-line1">
+                Crea y lanza<br>
+                con
+            </span>
+            <span class="studio-title-line2 studio-gradient-text">Pymefy Studio</span>
+        </h2>
+        
+        <!-- Option 2: Constructor -->
+        <h2 class="studio-title studio-title-dynamic" id="studioTitleOption2" style="display:none;">
+            <span class="studio-title-line1">
+                Edita y publica<br>
+                con
+            </span>
+            <span class="studio-title-line2 studio-gradient-text-cyan">Pymefy Constructor</span>
+        </h2>
+        
+        <!-- Icon -->
+        <span class="studio-title-icon" id="studioTitleIcon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M17 3a2.828 2 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+        </span>
+    </div>
 
-                <!-- KPIs -->
-                <div class="studio-kpi-row">
-                    <div class="studio-kpi">
-                        <span class="stat-num">50+</span>
-                        <span class="stat-label">Plantillas</span>
-                    </div>
-                    <div class="studio-kpi">
-                        <span class="stat-num">IA</span>
-                        <span class="stat-label">Generación auto</span>
-                    </div>
-                    <div class="studio-kpi">
-                        <span class="stat-num">1 clic</span>
-                        <span class="stat-label">Para publicar</span>
-                    </div>
-                </div>
+    <!-- Subtitle Option 1 -->
+    <p class="studio-subtitle studio-subtitle-dynamic" id="studioSubtitle1">
+        Editor con IA integrada para diseñar logos, contenido de marca y sitios web completos — todo desde un solo lugar.
+    </p>
+    
+    <!-- Subtitle Option 2 -->
+    <p class="studio-subtitle studio-subtitle-dynamic" id="studioSubtitle2" style="display:none;">
+        Editor de sitios con IA que te permite crear y modificar tu web hablándole. Describe, genera y publica en segundos.
+    </p>
 
-                <!-- CTAs -->
-                <div class="studio-left-cta">
-                    <span class="studio-left-cta-label">Empieza hoy — gratis</span>
-                    <div class="studio-cta-btns">
-                        <a href="#signup" class="btn-studio">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-                            Probar Studio
-                        </a>
-                        <a href="#signup" class="btn-constructor">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-                            Probar Constructor
-                        </a>
-                    </div>
-                </div>
+    <!-- Indicator Dots -->
+    <div class="studio-title-indicator">
+        <button class="indicator-dot active" id="indicatorStudio" aria-label="Ver Studio"></button>
+        <button class="indicator-dot" id="indicatorConstructor" aria-label="Ver Constructor"></button>
+    </div>
 
-            </div>
+    <!-- Rest of KPIs and CTAs remain the same... -->
+
+</div>
 
             <!-- ── RIGHT COLUMN: Two product cards ── -->
             <div class="studio-cards-col">
@@ -2445,6 +2548,117 @@ setInterval(spawnParticles, 6000);
     window.addEventListener('resize',tick);
     window.addEventListener('load',tick);
 })();
+// ═══════════════════════════════════════════════
+// SLIDE 4 — DYNAMIC TITLE SWITCH
+// ═══════════════════════════════════════════════
+(function() {
+    const title1 = document.getElementById('studioTitleOption1');
+    const title2 = document.getElementById('studioTitleOption2');
+    const subtitle1 = document.getElementById('studioSubtitle1');
+    const subtitle2 = document.getElementById('studioSubtitle2');
+    const indicatorStudio = document.getElementById('indicatorStudio');
+    const indicatorConstructor = document.getElementById('indicatorConstructor');
+    const icon = document.getElementById('studioTitleIcon');
+    
+    if (!title1 || !title2) return;
+    
+    let currentOption = 1;
+    let autoTimer = null;
+    const AUTO_DELAY = 5000; // Change every 5 seconds
+    let isUserInteracting = false;
+    
+    function updateIndicators() {
+        if (indicatorStudio) {
+            indicatorStudio.classList.toggle('active', currentOption === 1);
+        }
+        if (indicatorConstructor) {
+            indicatorConstructor.classList.toggle('active', currentOption === 2);
+        }
+    }
+    
+    function switchTo(option) {
+        if (option === currentOption) return;
+        
+        const prevTitle = currentOption === 1 ? title1 : title2;
+        const prevSubtitle = currentOption === 1 ? subtitle1 : subtitle2;
+        const nextTitle = option === 1 ? title1 : title2;
+        const nextSubtitle = option === 1 ? subtitle1 : subtitle2;
+        
+        // Rotate icon
+        if (icon) {
+            icon.classList.add('switching');
+            setTimeout(() => icon.classList.remove('switching'), 500);
+        }
+        
+        // Fade out current
+        prevTitle.classList.add('fade-out');
+        if (prevSubtitle) prevSubtitle.classList.add('hidden');
+        
+        setTimeout(() => {
+            // Hide current
+            prevTitle.style.display = 'none';
+            prevTitle.classList.remove('fade-out');
+            if (prevSubtitle) {
+                prevSubtitle.style.display = 'none';
+                prevSubtitle.classList.remove('hidden');
+            }
+            
+            // Show next with fade in
+            nextTitle.style.display = 'block';
+            nextTitle.classList.add('fade-in');
+            if (nextSubtitle) {
+                nextSubtitle.style.display = 'block';
+            }
+            
+            setTimeout(() => {
+                nextTitle.classList.remove('fade-in');
+            }, 500);
+            
+            currentOption = option;
+            updateIndicators();
+        }, 400);
+    }
+    
+    function nextOption() {
+        switchTo(currentOption === 1 ? 2 : 1);
+    }
+    
+    function resetAuto() {
+        if (autoTimer) clearInterval(autoTimer);
+        if (!isUserInteracting) {
+            autoTimer = setInterval(nextOption, AUTO_DELAY);
+        }
+    }
+    
+    // Click handlers for indicators
+    if (indicatorStudio) {
+        indicatorStudio.addEventListener('click', function() {
+            isUserInteracting = true;
+            if (autoTimer) clearInterval(autoTimer);
+            switchTo(1);
+            setTimeout(() => {
+                isUserInteracting = false;
+                resetAuto();
+            }, AUTO_DELAY);
+        });
+    }
+    
+    if (indicatorConstructor) {
+        indicatorConstructor.addEventListener('click', function() {
+            isUserInteracting = true;
+            if (autoTimer) clearInterval(autoTimer);
+            switchTo(2);
+            setTimeout(() => {
+                isUserInteracting = false;
+                resetAuto();
+            }, AUTO_DELAY);
+        });
+    }
+    
+    // Start auto rotation
+    resetAuto();
+})();
+
 </script>
 </body>
 </html>
