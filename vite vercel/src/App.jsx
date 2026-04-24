@@ -123,8 +123,19 @@ const SUGGESTION_CHIPS = [
   { prompt: 'Modelo de fotografía poniendo su mano vacía a su costado, con la palma extendida y mirando a la cámara, mientras sonríe', emoji: '📸', label: 'Modelo fotografía' },
   { prompt: 'Logo moderno para restaurant chileno, colores naranjas y dorados, estilo minimalista', emoji: '🎨', label: 'Logo restaurant' },
   { prompt: 'Banner para Instagram de una tienda de ropa, fondo degradado púrpura, estilo lifestyle', emoji: '📱', label: 'Banner Instagram' },
-  { prompt: 'Mockup de producto косметика en mesa de mármol blanco, iluminación natural suave', emoji: '✨', label: 'Mockup cosmético' },
+  { prompt: 'Mockup de producto cosmetico en mesa de mármol blanco, iluminación natural suave', emoji: '✨', label: 'Mockup cosmético' },
   { prompt: 'Foto de producto café specialty en taza blanca, vapor rising, fondo de madera oscura', emoji: '☕', label: 'Café specialty' },
+]
+
+const USER_GALLERY_IMAGES = [
+  { url: 'https://imagedelivery.net/JG2b3u-FulEpwbFCirpjnw/10147bbe-808d-46d7-9d8d-ef4df2d3c300/width=400,height=400,fit=cover,gravity=top,quality=85,format=auto', prompt: 'Logo moderno minimalista' },
+  { url: 'https://imagedelivery.net/JG2b3u-FulEpwbFCirpjnw/30ebe785-2def-4ce4-960d-17b4c08d4d00/width=400,height=400,fit=cover,gravity=top,quality=85,format=auto', prompt: 'Banner Instagram comida' },
+  { url: 'https://imagedelivery.net/JG2b3u-FulEpwbFCirpjnw/93473259-b88d-4d2c-dd3b-8f136bc6f300/width=400,height=400,fit=cover,gravity=top,quality=85,format=auto', prompt: 'Mockup cosmético premium' },
+  { url: 'https://images.unsplash.com/photo-1558655146-364adaf1fcc8?w=400&h=400&fit=crop', prompt: 'Fotografía producto café' },
+  { url: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=400&fit=crop', prompt: 'Diseño botella cosmética' },
+  { url: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop', prompt: 'Mockup reloj minimalista' },
+  { url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop', prompt: 'Caja regalo elegante' },
+  { url: 'https://images.unsplash.com/photo-1607082350899-7e105aa886ae?w=400&h=400&fit=crop', prompt: 'Perfume botella premium' },
 ]
 
 function getWaTime() {
@@ -1113,6 +1124,136 @@ function SignupSection() {
   )
 }
 
+
+const TOTAL_RIDER_FRAMES = 154
+const RIDER_FRAME_BASE = '/ezgif-frame-'
+const RIDER_FRAME_EXT = '.png'
+
+const RIDER_FRAMES = Array.from(
+  { length: TOTAL_RIDER_FRAMES },
+  (_, i) => `${RIDER_FRAME_BASE}${String(i + 1).padStart(3, '0')}${RIDER_FRAME_EXT}`
+)
+
+function RiderAnimation() {
+  const containerRef = useRef(null)
+  const spriteRef = useRef(null)
+  const [currentFrame, setCurrentFrame] = useState(0)
+  const [isVisible, setIsVisible] = useState(false)
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    if (RIDER_FRAMES.length === 0) {
+      setLoaded(true)
+      return
+    }
+    let mounted = true
+    const checkFrames = async () => {
+      try {
+        const firstFrame = new Image()
+        await new Promise((resolve, reject) => {
+          firstFrame.onload = resolve
+          firstFrame.onerror = reject
+          firstFrame.src = RIDER_FRAMES[0]
+        })
+        if (mounted) setLoaded(true)
+      } catch {
+        if (mounted) setLoaded(true)
+      }
+    }
+    checkFrames()
+    return () => { mounted = false }
+  }, [])
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsVisible(entry.isIntersecting)
+        })
+      },
+      { threshold: 0, rootMargin: '-10% 0px -10% 0px' }
+    )
+    observer.observe(container)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!isVisible || RIDER_FRAMES.length === 0) {
+      if (spriteRef.current && RIDER_FRAMES.length > 0) {
+        spriteRef.current.style.backgroundImage = `url('${RIDER_FRAMES[0]}')`
+      }
+      return
+    }
+    const handleScroll = () => {
+      const container = containerRef.current
+      if (!container || RIDER_FRAMES.length === 0) return
+      const rect = container.getBoundingClientRect()
+      const viewportHeight = window.innerHeight
+      const enterPoint = viewportHeight * 0.7
+      const exitPoint = viewportHeight * 0.2
+      const travelDistance = enterPoint - exitPoint
+      let progress = (enterPoint - rect.top) / travelDistance
+      progress = Math.max(0, Math.min(1, progress))
+      const frameIndex = Math.floor(progress * (RIDER_FRAMES.length - 1))
+      const clampedFrame = Math.max(0, Math.min(RIDER_FRAMES.length - 1, frameIndex))
+      setCurrentFrame(clampedFrame)
+      if (spriteRef.current && RIDER_FRAMES[clampedFrame]) {
+        spriteRef.current.style.backgroundImage = `url('${RIDER_FRAMES[clampedFrame]}')`
+      }
+    }
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleScroll)
+    }
+  }, [isVisible])
+
+  return (
+    <div className="rider-bike-wrapper" ref={containerRef}>
+      <div className="rider-bg-glow"></div>
+      <div className="rider-bike-container">
+        <div
+          className="rider-bike-sprite"
+          ref={spriteRef}
+          style={{
+            width: '200px',
+            height: '200px',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundImage: RIDER_FRAMES.length > 0 ? `url('${RIDER_FRAMES[0]}')` : 'none'
+          }}
+        >
+          {!loaded && RIDER_FRAMES.length === 0 && (
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '100%',
+              height: '100%',
+              color: 'var(--text-muted)',
+              fontSize: '0.75rem',
+              textAlign: 'center'
+            }}>
+              Animación del repartidor
+            </div>
+          )}
+        </div>
+        <div className="rider-shadow"></div>
+        <div className="speed-lines" id="speedLines">
+          <div className="speed-line"></div>
+          <div className="speed-line"></div>
+          <div className="speed-line"></div>
+        </div>
+        <div className="eco-badge-float">🌿 Entregas sustentables</div>
+      </div>
+    </div>
+  )
+}
 // Rider Section
 function RiderSection() {
   const [expanded, setExpanded] = useState(false)
@@ -1161,19 +1302,7 @@ function RiderSection() {
             </div>
           ))}
         </div>
-        <div className="rider-bike-wrapper">
-          <div className="rider-bg-glow"></div>
-          <div className="rider-bike-container">
-            <div className="rider-bike-sprite" id="riderBikeSprite"></div>
-            <div className="rider-shadow"></div>
-            <div className="speed-lines" id="speedLines">
-              <div className="speed-line"></div>
-              <div className="speed-line"></div>
-              <div className="speed-line"></div>
-            </div>
-            <div className="eco-badge-float">🌿 Entregas sustentables</div>
-          </div>
-        </div>
+        <RiderAnimation />
         <div className="rider-cta-area">
           <div className="rider-capture-shell" id="riderCaptureShell" style={{}}>
             <button className="rider-cta-btn" id="riderCtaBtn" onClick={() => setExpanded(true)}>
@@ -1220,6 +1349,8 @@ function ImageGeneratorModal({ open, onClose }) {
   const [cooldownRemaining, setCooldownRemaining] = useState(0)
   const lastGeneratedRef = useRef(0)
   const cooldownTimerRef = useRef(null)
+  const [clientIP, setClientIP] = useState(null)
+  const [rateLimitInfo, setRateLimitInfo] = useState({ allowed: true, remaining: GENERATION_LIMIT, resetTime: null })
 
   useEffect(() => {
     if (!open) {
@@ -1229,6 +1360,16 @@ function ImageGeneratorModal({ open, onClose }) {
       setLoading(false)
     }
   }, [open])
+
+  useEffect(() => {
+    if (open && !clientIP) {
+      getClientIP().then(ip => {
+        setClientIP(ip)
+        const limit = checkRateLimit(ip)
+        setRateLimitInfo(limit)
+      })
+    }
+  }, [open, clientIP])
 
   useEffect(() => {
     return () => {
@@ -1261,6 +1402,7 @@ function ImageGeneratorModal({ open, onClose }) {
    const handleGenerate = async () => {
     if (!prompt.trim()) return
     if (!canGenerate()) return
+    if (!rateLimitInfo.allowed) return
 
     setLoading(true)
     setError(null)
@@ -1289,6 +1431,10 @@ function ImageGeneratorModal({ open, onClose }) {
         try {
           const result = await generateWithMinimax(prompt, size, style)
           setResult({ url: result.url, prompt })
+          if (clientIP) {
+            recordGeneration(clientIP)
+            setRateLimitInfo(checkRateLimit(clientIP))
+          }
           setLoading(false)
           return
         } catch (minimaxError) {
@@ -1308,6 +1454,10 @@ function ImageGeneratorModal({ open, onClose }) {
         img.src = imageUrl
       })
       setResult({ url: imageUrl, prompt })
+      if (clientIP) {
+        recordGeneration(clientIP)
+        setRateLimitInfo(checkRateLimit(clientIP))
+      }
     } catch (err) {
       setError(err.message || 'Error al generar. Intenta con otro prompt.')
     } finally {
@@ -1350,8 +1500,9 @@ function ImageGeneratorModal({ open, onClose }) {
     <div className="img-gen-modal">
       <div className="img-gen-overlay" onClick={onClose}></div>
       <div className="img-gen-container">
-        {/* Header */}
-        <div className="img-gen-header">
+        <div className="img-gen-main">
+          {/* Header */}
+          <div className="img-gen-header">
           <div className="img-gen-title-wrap">
             <div className="img-gen-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
@@ -1430,12 +1581,16 @@ function ImageGeneratorModal({ open, onClose }) {
         <div className="img-gen-actions">
           <div className="img-gen-credits">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            <span>5 generaciones gratis al día</span>
+            {!rateLimitInfo.allowed ? (
+              <span style={{ color: '#ef4444' }}>Límite alcanzado · Resetea en {rateLimitInfo.resetTime}</span>
+            ) : (
+              <span>{rateLimitInfo.remaining} de {GENERATION_LIMIT} generaciones · Resetea en 10h</span>
+            )}
           </div>
           <button
             className="img-gen-submit"
             onClick={handleGenerate}
-            disabled={!canSubmit}
+            disabled={!canSubmit || !rateLimitInfo.allowed}
           >
             {loading ? (
               <span className="img-gen-submit-loading">
@@ -1443,7 +1598,9 @@ function ImageGeneratorModal({ open, onClose }) {
                 Generando...
               </span>
             ) : cooldown ? (
-              <span style={{ fontSize: '0.8125rem' }}>Cooldown: {Math.ceil(cooldownRemaining / 1000)}s</span>
+              <span style={{ fontSize: '0.8125rem' }}>Espera {Math.ceil(cooldownRemaining / 1000)}s</span>
+            ) : !rateLimitInfo.allowed ? (
+              <span style={{ fontSize: '0.8125rem' }}>Límite alcanzado</span>
             ) : (
               <span className="img-gen-submit-text">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/></svg>
@@ -1486,6 +1643,33 @@ function ImageGeneratorModal({ open, onClose }) {
           </div>
         )}
       </div>
+
+      <div className="img-gen-gallery">
+        <div className="img-gen-gallery-header">
+          <h4 className="img-gen-gallery-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
+            Galería de usuarios
+          </h4>
+          <span className="img-gen-gallery-sub">Fotos generadas hoy</span>
+        </div>
+        <div className="img-gen-gallery-grid">
+          {USER_GALLERY_IMAGES.map((img, i) => (
+            <div key={i} className="img-gen-gallery-item">
+              <img src={img.url} alt={img.prompt} loading="lazy" />
+              <div className="img-gen-gallery-overlay">
+                <span className="img-gen-gallery-prompt">{img.prompt}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="img-gen-gallery-footer">
+          <button className="img-gen-gallery-btn" onClick={() => handleRegenerate()} disabled={loading || !prompt.trim()}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+            Nueva variación
+          </button>
+        </div>
+      </div>
+    </div>
     </div>
   )
 }
